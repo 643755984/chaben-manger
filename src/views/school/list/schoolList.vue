@@ -9,12 +9,17 @@
         </div> -->
         <div class="container">
             <div class="handle-box">
-                <el-select v-model="query.address" placeholder="地址" class="handle-select mr10">
-                    <el-option key="1" label="广东省" value="广东省"></el-option>
-                    <el-option key="2" label="湖南省" value="湖南省"></el-option>
-                </el-select>
-                <el-input v-model="query.name" placeholder="用户名" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+                <div>
+                    <el-select v-model="query.address" placeholder="地址" class="handle-select mr10">
+                        <el-option key="1" label="广东省" value="广东省"></el-option>
+                        <el-option key="2" label="湖南省" value="湖南省"></el-option>
+                    </el-select>
+                    <el-input v-model="query.name" placeholder="用户名" class="handle-input mr10"></el-input>
+                    <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+                </div>
+                <div>
+                    <el-button type="primary" icon="el-icon-search" @click="handleAdd">添加学校</el-button>
+                </div>
             </div>
             <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
                 <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
@@ -99,6 +104,9 @@ export default {
         const handleSearch  = () => {
             
         }
+        const handleAdd = () => {
+            
+        }
 
         // 删除操作
         const handleDelete = (index) => {
@@ -121,14 +129,17 @@ export default {
             handleSearch,
             handlePageChange,
             handleDelete,
-            handleEdit
+            handleEdit,
+            handleAdd
         };
     },
 };
 </script>
 <style lang="scss" scoped>
 .handle-box {
+    display: flex;
     margin-bottom: 20px;
+    justify-content: space-between;
 }
 
 .handle-select {

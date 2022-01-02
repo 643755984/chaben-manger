@@ -1,14 +1,16 @@
 import {createRouter, createWebHashHistory} from "vue-router";
-import Home from "../views/Home.vue";
+import { adaptRouter, adaptSidebar } from '@/utils/adaptRouter'
+// import cloneDeep from 'lodash/cloneDeep'
 
 const routes = [
     {
         path: '/',
         redirect: '/dashboard'
-    }, {
+    },
+    {
         path: "/",
         name: "Home",
-        component: Home,
+        component: () => import ( /* webpackChunkName: "home" */ "../views/Home.vue"),
         children: [
             {
                 path: "/dashboard",
@@ -19,13 +21,40 @@ const routes = [
                 component: () => import ( /* webpackChunkName: "dashboard" */ "../views/Dashboard.vue")
             },
             {
-                path: "/school/list",
+                path: "school",
                 name: "school",
                 meta: {
-                    title: '学校模块'
+                    title: '学校管理'
                 },
-                component: () => import ( /* webpackChunkName: "school" */ "../views/school/list/schoolList.vue")
-            },{
+                children: [
+                    {
+                        path: 'list',
+                        name: 'list',
+                        meta: {
+                            title: '学校列表'
+                        },
+                        component: () => import ( /* webpackChunkName: "schoolList" */ "../views/school/list/schoolList.vue")
+                    },
+                    {
+                        path: 'add',
+                        name: 'add',
+                        meta: {
+                            title: '添加学校',
+                            hidden: true
+                        },
+                        component: () => import ( /* webpackChunkName: "schoolAdd" */ "../views/school/add/addSchool.vue")
+                    }
+                ]
+            },
+            // {
+            //     path: "/school/list",
+            //     name: "school",
+            //     meta: {
+            //         title: '学校模块'
+            //     },
+            //     component: () => import ( /* webpackChunkName: "school" */ "../views/school/list/schoolList.vue")
+            // },
+            {
                 path: "/table",
                 name: "basetable",
                 meta: {
@@ -129,9 +158,18 @@ const routes = [
     }
 ];
 
+
+// routes = changeRoutes(routes[1].children, [], '', '')
+// console.log(changeRoutes(routes[1].children, [], '', ''))
+// routes[1].children = changeRoutes(routes[1].children, [], '', '')
+// console.log('rou--->', routes)
+let vueRouter = adaptRouter(routes)
+let slideBar = adaptSidebar(routes)
+// console.log('vur--->', vueRouter)
+
 const router = createRouter({
     history: createWebHashHistory(),
-    routes
+    routes: vueRouter
 });
 
 router.beforeEach((to, from, next) => {
@@ -149,4 +187,24 @@ router.beforeEach((to, from, next) => {
     }
 });
 
-export default router;
+
+// function adaptVurRouter(routes) {
+//     routes = cloneDeep(routes)
+//     routes[1].children = changeRoutes(routes[1].children, [], '', '')
+//     return routes
+// }
+
+// function changeRoutes(oldRoute, newRoutes, path, name) {
+//     for(let i=0;i<oldRoute.length;i++) {
+//         if(!oldRoute[i].children) {
+//             if(path) oldRoute[i].path = path + `/${oldRoute[i].path}`
+//             if(name) oldRoute[i].name = name + `-${oldRoute[i].name}`
+//             newRoutes.push(oldRoute[i])
+//         }else {
+//             changeRoutes(oldRoute[i].children, newRoutes, path + `/${oldRoute[i].path}`, name + `${oldRoute[i].name}`)
+//         }
+//     }
+//     return newRoutes
+// }
+
+export { router, slideBar };
