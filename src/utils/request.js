@@ -1,11 +1,15 @@
 import axios from 'axios';
 
+const baseService = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:7001' : ''
+const baseUrl = process.env.NODE_ENV === 'development' ? '/api/v1' : '/api/v1'
+
 const service = axios.create({
     // process.env.NODE_ENV === 'development' 来判断是否开发环境
     // easy-mock服务挂了，暂时不使用了
-    // baseURL: 'https://www.easy-mock.com/mock/592501a391470c0ac1fab128',
+    baseURL: baseService + baseUrl,
     timeout: 5000
 });
+
 
 service.interceptors.request.use(
     config => {

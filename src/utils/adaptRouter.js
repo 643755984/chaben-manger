@@ -19,12 +19,10 @@ function changeSlidebar(routes, path) {
                 routes.splice(i, 1)
             }else {
                 if(path) routes[i].path = path + `/${routes[i].path}`
-                // routes[i].path = path ? path + `/${routes[i].path}` : path
             }
         }else {
             changeSlidebar(routes[i].children, path + `/${routes[i].path}`)
         }
-        
     }
     return routes
 }
@@ -33,7 +31,7 @@ function changeRoutes(oldRoute, newRoutes, path, name) {
     for(let i=0;i<oldRoute.length;i++) {
         if(!oldRoute[i].children) {
             if(path) oldRoute[i].path = path + `/${oldRoute[i].path}`
-            if(name) oldRoute[i].name = name + `-${oldRoute[i].name}`
+            // if(name) oldRoute[i].name = name + `-${oldRoute[i].name}`
             newRoutes.push(oldRoute[i])
         }else {
             changeRoutes(oldRoute[i].children, newRoutes, path + `/${oldRoute[i].path}`, name + `${oldRoute[i].name}`)

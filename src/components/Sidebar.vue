@@ -17,7 +17,7 @@
                 </template>
                 <template v-else>
                     <el-menu-item :index="item.path" :key="item.path">
-                        <i class="el-icon-lx-home"></i>
+                        <i class="el-icon-lx-compass"></i>
                         <template #title>{{ item.meta.title }}</template>
                     </el-menu-item>
                 </template>
@@ -32,7 +32,6 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { slideBar } from '@/router/index'
 import { ref } from 'vue'
-console.log(slideBar)
 
 export default {
     setup() {

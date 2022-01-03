@@ -29,7 +29,7 @@ const routes = [
                 children: [
                     {
                         path: 'list',
-                        name: 'list',
+                        name: 'schoolList',
                         meta: {
                             title: '学校列表'
                         },
@@ -37,7 +37,7 @@ const routes = [
                     },
                     {
                         path: 'add',
-                        name: 'add',
+                        name: 'schoolAdd',
                         meta: {
                             title: '添加学校',
                             hidden: true
