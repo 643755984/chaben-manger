@@ -8,7 +8,6 @@ function adaptRouter(routes) {
 
 function adaptSidebar(routes) {
     let arr = cloneDeep(routes[1].children)
-
     return changeSlidebar(arr, '')
 }
 
@@ -17,6 +16,7 @@ function changeSlidebar(routes, path) {
         if(!routes[i].children) {
             if(routes[i].meta.hidden){
                 routes.splice(i, 1)
+                i--
             }else {
                 if(path) routes[i].path = path + `/${routes[i].path}`
             }

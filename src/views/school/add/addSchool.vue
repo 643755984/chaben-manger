@@ -38,7 +38,7 @@
                         <el-upload
                             class="avatar-uploader"
                             action=""
-                            ref="uploadMutiple"
+                            ref="uploadRef"
                             :show-file-list="false"
                             :auto-upload="false"
                             :http-request="uploadImg"
@@ -50,7 +50,7 @@
                         </el-upload>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">新增学校</el-button>
+                        <el-button type="primary" @click="handleAdd">新增院校</el-button>
                         <el-button @click="onReset">重置表单</el-button>
                     </el-form-item>
                 </el-form>
@@ -60,89 +60,29 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
-import { reactive, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
-import { uploadFile } from '@/api/common.js'
-import { addSchool } from '@/api/school.js'
-import setImgUrlComposables from '@/setup/setImgUrlComposables'
+
+import setImgUrlSetup from '@/setup/setImgUrlSetup'
+import uploadImgSetup from './composables/uploadImgSetup'
+import formSetup from './composables/formSetup'
 
 export default {
     name: "baseform",
     setup() {
-        const rules = {
-            schoolName: [
-                { required: true, message: "请输入表单名称", trigger: "blur" },
-            ],
-            schoolType: [
-                { required: true, message: "请选择学校类型", trigger: "blur" },
-            ],
-            schoolLevel: [
-                { required: true, message: "请选择学校等级", trigger: "blur" },
-            ],
-        };
-        const { setImgUrl } = setImgUrlComposables()
-        const route = useRoute();
-        const router = useRouter();
-        const store = useStore();
-        const formRef = ref(null);
-        const uploadMutiple = ref(null)
-        const form = reactive({
-            schoolName: "",
-            schoolType: "",
-            schoolLevel: "",
-            schoolAddress: '',
-            schoolLogo: ''
-        });
-        // 提交
-        const onSubmit = () => {
-            store.commit("closeCurrentTag", {
-                $router: router,
-                $route: route
-            });
-            // 表单校验
-            // formRef.value.validate((valid) => {
-            //     if (valid) {
-            //         addSchool(form).then(res => {
-            //             // console.log(res)
-            //             if(res.code === 200) {
-            //                 ElMessage.success("新增成功！")
-            //                 store.commit("delTagsItem", { index });
-            //             }else {
-            //                 ElMessage.error(res.data)
-            //             }
-            //         })
-            //     } else {
-            //         return false;
-            //     }
-            // });
-        };
-        // 重置
-        const onReset = () => {
-            formRef.value.resetFields();
-        };
+        const { setImgUrl } = setImgUrlSetup()
+        const { uploadRef, imgUrl, formRef, change, uploadImg} = uploadImgSetup()
+        const { rules, form, onReset, onSubmit } = formSetup()
 
-        const uploadImg = (e) => {
-            let formData = new FormData();
-            formData.append("files", e.file);
-            uploadFile(formData).then(res => {
-                if(res.code === 200) {
-                    form.schoolLogo = res.data
-                }
-            })
-        }
-
-        const change = () => {
-            uploadMutiple.value.submit();
+        const handleAdd = () => {
+            onSubmit(imgUrl.value)
         }
 
         return {
+            formRef,
             rules,
             formRef,
             form,
-            uploadMutiple,
-            onSubmit,
+            uploadRef,
+            handleAdd,
             onReset,
             uploadImg,
             change,

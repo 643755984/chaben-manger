@@ -16,7 +16,8 @@ const routes = [
                 path: "/dashboard",
                 name: "dashboard",
                 meta: {
-                    title: '系统首页'
+                    title: '系统首页',
+                    icon: 'HomeFilled'
                 },
                 component: () => import ( /* webpackChunkName: "dashboard" */ "../views/Dashboard.vue")
             },
@@ -24,14 +25,15 @@ const routes = [
                 path: "school",
                 name: "school",
                 meta: {
-                    title: '学校管理'
+                    title: '院校管理',
+                    icon: 'menus'
                 },
                 children: [
                     {
                         path: 'list',
                         name: 'schoolList',
                         meta: {
-                            title: '学校列表'
+                            title: '院校列表'
                         },
                         component: () => import ( /* webpackChunkName: "schoolList" */ "../views/school/list/schoolList.vue")
                     },
@@ -39,10 +41,19 @@ const routes = [
                         path: 'add',
                         name: 'schoolAdd',
                         meta: {
-                            title: '添加学校',
+                            title: '添加院校',
                             hidden: true
                         },
                         component: () => import ( /* webpackChunkName: "schoolAdd" */ "../views/school/add/addSchool.vue")
+                    },
+                    {
+                        path: 'detail',
+                        name: 'schoolDetail',
+                        meta: {
+                            title: '院校详情',
+                            hidden: true
+                        },
+                        component: () => import ( /* webpackChunkName: "schoolDetail" */ "../views/school/detail/schoolDetail.vue")
                     }
                 ]
             },
@@ -55,13 +66,6 @@ const routes = [
             //     component: () => import ( /* webpackChunkName: "school" */ "../views/school/list/schoolList.vue")
             // },
             {
-                path: "/table",
-                name: "basetable",
-                meta: {
-                    title: '表格'
-                },
-                component: () => import ( /* webpackChunkName: "table" */ "../views/BaseTable.vue")
-            }, {
                 path: "/charts",
                 name: "basecharts",
                 meta: {
@@ -69,27 +73,13 @@ const routes = [
                 },
                 component: () => import ( /* webpackChunkName: "charts" */ "../views/BaseCharts.vue")
             }, {
-                path: "/form",
-                name: "baseform",
-                meta: {
-                    title: '表单'
-                },
-                component: () => import ( /* webpackChunkName: "form" */ "../views/BaseForm.vue")
-            }, {
                 path: "/tabs",
                 name: "tabs",
                 meta: {
                     title: 'tab标签'
                 },
                 component: () => import ( /* webpackChunkName: "tabs" */ "../views/Tabs.vue")
-            }, {
-                path: "/donate",
-                name: "donate",
-                meta: {
-                    title: '鼓励作者'
-                },
-                component: () => import ( /* webpackChunkName: "donate" */ "../views/Donate.vue")
-            }, {
+            },{
                 path: "/permission",
                 name: "permission",
                 meta: {
@@ -104,14 +94,7 @@ const routes = [
                     title: '国际化语言'
                 },
                 component: () => import ( /* webpackChunkName: "i18n" */ "../views/I18n.vue")
-            }, {
-                path: "/upload",
-                name: "upload",
-                meta: {
-                    title: '上传插件'
-                },
-                component: () => import ( /* webpackChunkName: "upload" */ "../views/Upload.vue")
-            }, {
+            },{
                 path: "/icon",
                 name: "icon",
                 meta: {

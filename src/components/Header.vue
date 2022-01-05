@@ -2,8 +2,8 @@
     <div class="header">
         <!-- 折叠按钮 -->
         <div class="collapse-btn" @click="collapseChage">
-            <i v-if="!collapse" class="el-icon-s-fold"></i>
-            <i v-else class="el-icon-s-unfold"></i>
+            <el-icon v-if="!collapse"><fold></fold></el-icon>
+            <el-icon v-else><expand></expand></el-icon>
         </div>
         <div class="logo">后台管理系统</div>
         <div class="header-right">
@@ -12,7 +12,7 @@
                 <div class="btn-bell">
                     <el-tooltip effect="dark" :content="message?`有${message}条未读消息`:`消息中心`" placement="bottom">
                         <router-link to="/tabs">
-                            <i class="el-icon-bell"></i>
+                            <el-icon color="#fff"><bell /></el-icon>
                         </router-link>
                     </el-tooltip>
                     <span class="btn-bell-badge" v-if="message"></span>

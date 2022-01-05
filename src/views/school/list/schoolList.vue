@@ -27,18 +27,20 @@
                 <el-table-column prop="schoolType" label="学校类型"></el-table-column>
                 <el-table-column prop="schoolLevel" label="学校等级"></el-table-column>
                 <el-table-column prop="schoolAddress" label="学校地址"></el-table-column>
-                <el-table-column label="操作" width="180" align="center">
+                <el-table-column label="操作" width="200" align="center">
                     <template #default="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑
+                        <el-button type="text" @click="handleEdit(scope.$index, scope.row)">编辑
                         </el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red"
+                        <el-button type="text" @click="handleDetail(scope.$index, scope.row)">详情
+                        </el-button>
+                        <el-button type="text" class="red"
                             @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <div class="pagination">
-                <el-pagination background layout="total, prev, pager, next" :current-page="query.pageIndex"
-                    :page-size="query.pageSize" :total="pageTotal" @current-change="handlePageChange"></el-pagination>
+                <el-pagination background layout="total, prev, pager, next" :current-page="page.pageNum"
+                    :page-size="page.pageSize" :total="page.pageTotal" @current-change="changePage"></el-pagination>
             </div>
         </div>
 
@@ -46,19 +48,20 @@
 </template>
 
 <script>
-import { ElMessage, ElMessageBox } from "element-plus";
-import search from './composables/search'
+import searchSetup from './composables/searchSetup'
+import usePageSetup from './composables/pageSetup'
 import { router } from '@/router/index'
 
 export default {
     name: "schoolList",
     setup() {
-        let { query, tableData, pageTotal, handlePageChange, handleSearch } = search()
+        let { query, tableData, pageTotal, handleSearch } = searchSetup()
+        let { page, changePage } = usePageSetup()
         
-        //编辑
+        // 编辑
         const handleEdit = () => {
         }
-        
+        // 新增
         const handleAdd = () => {
             router.push({name: 'schoolAdd'})
         }
@@ -67,16 +70,21 @@ export default {
         const handleDelete = (index) => {
         };
 
+        const handleDetail = (index) => {
+            router.push({name: 'schoolDetail'})
+        }
 
         return {
             query,
             tableData,
             pageTotal,
-            handleSearch,
-            handlePageChange,
+            page,
+            handleDetail,
             handleDelete,
             handleEdit,
-            handleAdd
+            handleAdd,
+            changePage,
+            handleSearch,
         };
     },
 };
@@ -86,30 +94,28 @@ export default {
     display: flex;
     margin-bottom: 20px;
     justify-content: space-between;
-}
-
-.handle-select {
-    width: 120px;
-}
-
-.handle-input {
-    width: 300px;
-    display: inline-block;
+    .handle-input {
+        width: 300px;
+        display: inline-block;
+    }
+   
 }
 .table {
     width: 100%;
     font-size: 14px;
+    .red {
+        color: #ff0000;
+    }
+    .table-td-thumb {
+        display: block;
+        margin: auto;
+        width: 40px;
+        height: 40px;
+    }
 }
-.red {
-    color: #ff0000;
-}
+
 .mr10 {
     margin-right: 10px;
 }
-.table-td-thumb {
-    display: block;
-    margin: auto;
-    width: 40px;
-    height: 40px;
-}
+
 </style>

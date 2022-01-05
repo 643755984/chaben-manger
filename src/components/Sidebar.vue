@@ -7,17 +7,18 @@
                     <el-submenu :index="item.path" :key="item.path">
                         <template #title>
                             <!-- <i :class="item.icon"></i> -->
-                            <i class="el-icon-lx-home"></i>
-                            <span>{{ item.meta.title }}</span>
+                            <!-- <el-icon><component :is="item.meta.icon"></component></el-icon> -->
+                            <!-- <span>{{ item.meta.icon }}</span> -->
                         </template>
                         <el-menu-item v-for="subItem in item.children" :index="subItem.path" :key="subItem.path">
-                            {{ subItem.meta.title }}
+                            <!-- {{ subItem.meta.title }} -->
                         </el-menu-item>
                     </el-submenu>
                 </template>
                 <template v-else>
                     <el-menu-item :index="item.path" :key="item.path">
-                        <i class="el-icon-lx-compass"></i>
+                        <!-- <i :class="item.meta.icon"></i> -->
+                        <el-icon><component :is="item.meta.icon"></component></el-icon>
                         <template #title>{{ item.meta.title }}</template>
                     </el-menu-item>
                 </template>
