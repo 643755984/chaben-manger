@@ -10,15 +10,11 @@
         <div class="container">
             <div class="handle-box">
                 <div>
-                    <!-- <el-select v-model="query.address" placeholder="地址" class="handle-select mr10">
-                        <el-option key="1" label="广东省" value="广东省"></el-option>
-                        <el-option key="2" label="湖南省" value="湖南省"></el-option>
-                    </el-select> -->
                     <el-input v-model="query.name" placeholder="学校名" class="handle-input mr10"></el-input>
-                    <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+                    <el-button type="primary" icon="search" @click="handleSearch">搜索</el-button>
                 </div>
                 <div>
-                    <el-button type="primary" icon="el-icon-circle-plus" @click="handleAdd">新增学校</el-button>
+                    <el-button type="primary" icon="CirclePlus" @click="handleAdd">新增学校</el-button>
                 </div>
             </div>
             <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">

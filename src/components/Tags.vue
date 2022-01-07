@@ -4,13 +4,14 @@
             <li class="tags-li" v-for="(item,index) in tagsList" :class="{'active': isActive(item.path)}" :key="index">
                 <router-link :to="item.path" class="tags-li-title">{{item.title}}</router-link>
                 <span class="tags-li-icon" @click="closeTags(index)">
-                    <i class="el-icon-close"></i>
+                    <!-- <i class="el-icon-close"></i> -->
+                    <el-icon><close /></el-icon>
                 </span>
             </li>
         </ul>
         <div class="tags-close-box">
             <el-dropdown @command="handleTags">
-                <el-button size="mini" type="primary">
+                <el-button size="small" type="primary">
                     标签选项
                     <i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
@@ -110,7 +111,7 @@ export default {
 </script>
 
 
-<style>
+<style lang="scss">
 .tags {
     position: relative;
     height: 30px;
@@ -143,6 +144,11 @@ export default {
     -webkit-transition: all 0.3s ease-in;
     -moz-transition: all 0.3s ease-in;
     transition: all 0.3s ease-in;
+    .tags-li-icon {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
 }
 
 .tags-li:not(.active):hover {
