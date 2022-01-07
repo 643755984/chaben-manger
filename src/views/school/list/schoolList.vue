@@ -10,7 +10,7 @@
         <div class="container">
             <div class="handle-box">
                 <div>
-                    <el-input v-model="query.name" placeholder="学校名" class="handle-input mr10"></el-input>
+                    <el-input v-model="page.schoolName" placeholder="学校名" class="handle-input mr10"></el-input>
                     <el-button type="primary" icon="search" @click="handleSearch">搜索</el-button>
                 </div>
                 <div>
@@ -44,36 +44,23 @@
 </template>
 
 <script>
-import searchSetup from './composables/searchSetup'
+import { onBeforeMount } from "vue";
+import tableSetup from './composables/tableSetup'
 import usePageSetup from './composables/pageSetup'
-import { router } from '@/router/index'
+
 
 export default {
     name: "schoolList",
     setup() {
-        let { query, tableData, pageTotal, handleSearch } = searchSetup()
-        let { page, changePage } = usePageSetup()
+        let { handleEdit, handleAdd, handleDelete, handleDetail } = tableSetup()
+        let { page, changePage, tableData, handleSearch } = usePageSetup()
         
-        // 编辑
-        const handleEdit = () => {
-        }
-        // 新增
-        const handleAdd = () => {
-            router.push({name: 'schoolAdd'})
-        }
-
-        // 删除操作
-        const handleDelete = (index) => {
-        };
-
-        const handleDetail = (index) => {
-            router.push({name: 'schoolDetail'})
-        }
+        onBeforeMount(() => {
+            handleSearch()
+        })
 
         return {
-            query,
             tableData,
-            pageTotal,
             page,
             handleDetail,
             handleDelete,

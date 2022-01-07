@@ -1,9 +1,8 @@
 import ElementPlus from 'element-plus'
 // import { createI18n } from 'vue-i18n'
 import 'element-plus/dist/index.css'
-import { Fold, Expand, Bell, HomeFilled, Menu, Close, Search, CirclePlus } from '@element-plus/icons-vue'
-import localeZH from 'element-plus/lib/locale/lang/zh-cn'
-// import localeEN from 'element-plus/lib/locale/lang/en'
+import { Fold, Expand, Bell, HomeFilled, Menu, Close, Search, CirclePlus, Plus } from '@element-plus/icons-vue'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 // import messages from '../utils/i18n'
 
 // const i18n = createI18n({
@@ -19,11 +18,12 @@ const icons = {
   menus: Menu,
   Close,
   Search, 
-  CirclePlus
+  CirclePlus,
+  Plus
 }
 
 export default (app) => {
-  app.use(ElementPlus, { locale:localeZH })
+  app.use(ElementPlus, { locale: zhCn })
   installIcon(app)
   // app.use(i18n)
 }

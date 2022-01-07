@@ -45,8 +45,7 @@
                             :on-change="change"
                         >
                             <img v-if="form.schoolLogo" :src="setImgUrl(form.schoolLogo)" class="avatar" />
-                            <!-- <el-icon v-else class="avatar-uploader-icon"><plus /></el-icon> -->
-                            <i v-else class="el-icon-lx-add avatar-uploader-icon"></i>
+                            <el-icon v-else :size="20"><plus /></el-icon>
                         </el-upload>
                     </el-form-item>
                     <el-form-item>

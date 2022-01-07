@@ -7,3 +7,11 @@ export const addSchool = data => {
         data
     });
 };
+
+export const schoolList = query => {
+    return request({
+        url: '/school/list',
+        method: 'get',
+        params: query
+    })
+}
