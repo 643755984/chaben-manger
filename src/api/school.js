@@ -16,7 +16,7 @@ export const schoolList = query => {
     })
 }
 
-export const schoolDetail = id => {
+export const getSchoolInfo = id => {
     return request({
         url: `/school/${id}`,
         method: 'get'

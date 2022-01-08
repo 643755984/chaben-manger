@@ -38,7 +38,7 @@ const routes = [
                         component: () => import ( /* webpackChunkName: "schoolList" */ "../views/school/list/schoolList.vue")
                     },
                     {
-                        path: 'add',
+                        path: 'add/:schoolId',
                         name: 'schoolAdd',
                         meta: {
                             title: '添加院校',

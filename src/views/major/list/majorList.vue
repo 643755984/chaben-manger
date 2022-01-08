@@ -32,12 +32,8 @@
                 <el-table-column prop="majorType" label="专业类型"></el-table-column>
                 <el-table-column label="操作" width="200" align="center">
                     <template #default="scope">
-                        <el-button type="text" @click="handleEdit(scope.$index, scope.row)">编辑
-                        </el-button>
-                        <el-button type="text" @click="handleDetail(scope.row)">详情
-                        </el-button>
                         <el-button type="text" class="red"
-                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                            @click="handleDelete(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -51,7 +47,6 @@
             v-model="dialogVisible"
             title="新增专业"
             width="50%"
-            :before-close="handleClose"
         >
             <el-form ref="formRef" :model="form" label-width="120px" :rules="rules">
                 <el-form-item label="专业名称" prop="majorName">
@@ -89,8 +84,8 @@ import useAddMajor from './composables/addMajorSetup'
 export default {
     name: "schoolList",
     setup() {
-        let { page, tableData, changePage, handleSearch, handleDelete, handleDetail } = tableSetup()
-        let { dialogVisible, form, majorOptions, rules, formRef, handleClose, confirmAdd, handleAdd} = useAddMajor()
+        let { page, tableData, changePage, handleSearch, handleDelete } = tableSetup()
+        let { dialogVisible, form, majorOptions, rules, formRef, confirmAdd, handleAdd} = useAddMajor()
 
         onBeforeMount(() => {
             handleSearch()
@@ -105,12 +100,10 @@ export default {
             rules,
             formRef,
             confirmAdd,
-            handleDetail,
             handleDelete,
             handleAdd,
             changePage,
-            handleSearch,
-            handleClose
+            handleSearch
         };
     },
 };

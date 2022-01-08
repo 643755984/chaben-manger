@@ -1,9 +1,8 @@
 import { ref, reactive } from "vue";
-import { useRouter } from 'vue-router'
-import { majorList } from "@/api/major";
+import { majorList, deleteMajor } from "@/api/major";
+import { ElMessage } from "element-plus";
 
 export default function useNav() {
-    const router = useRouter();
     const page = reactive({
         majorType: '',
         majorName: '',
@@ -15,19 +14,23 @@ export default function useNav() {
     const tableData = ref([]);
 
     // 删除操作
-    const handleDelete = (index) => {
+    const handleDelete = (item) => {
+        deleteMajor(item.id).then(res => {
+            if(res.code === 200) {
+                ElMessage.success("删除专业成功")
+            }else {
+                ElMessage.error("删除专业失败")
+            }
+            handleSearch()
+        })
     };
-
-    const handleDetail = (item) => {
-        console.log(item.schoolId)
-        router.push({name: 'schoolDetail', params: { schoolId: item.schoolId}})
-    }
 
     const handleSearch  = () => {
         majorList(page).then(res => {
             if(res.code === 200) {
                 tableData.value = res.data.rows
                 page.pageTotal = res.data.count
+                handleSearch()
             }
         })   
     }
@@ -41,7 +44,6 @@ export default function useNav() {
         page,
         tableData,
         handleDelete,
-        handleDetail,
         changePage,
         handleSearch
     }

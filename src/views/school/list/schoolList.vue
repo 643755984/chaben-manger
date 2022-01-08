@@ -25,7 +25,7 @@
                 <el-table-column prop="schoolAddress" label="学校地址"></el-table-column>
                 <el-table-column label="操作" width="200" align="center">
                     <template #default="scope">
-                        <el-button type="text" @click="handleEdit(scope.$index, scope.row)">编辑
+                        <el-button type="text" @click="handleEdit(scope.row)">编辑
                         </el-button>
                         <el-button type="text" @click="handleDetail(scope.row)">详情
                         </el-button>

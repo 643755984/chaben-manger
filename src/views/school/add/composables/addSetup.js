@@ -57,11 +57,6 @@ export default function useNav() {
         });
     };
 
-    // 重置
-    const onReset = () => {
-        formRef.value.resetFields();
-    };
-
     const uploadImg = (e) => {
         let formData = new FormData();
         formData.append("files", e.file);
@@ -81,7 +76,6 @@ export default function useNav() {
         formRef,
         rules,
         form,
-        onReset,
         onSubmit,
         uploadImg,
         change

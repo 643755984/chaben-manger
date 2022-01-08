@@ -49,8 +49,7 @@
                         </el-upload>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="handleAdd">新增院校</el-button>
-                        <el-button @click="onReset">重置表单</el-button>
+                        <el-button type="primary" @click="onSubmit">{{ btnText }}</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -59,17 +58,29 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useRoute } from 'vue-router'
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
-import formSetup from './composables/formSetup'
+import addSetup from './composables/addSetup'
+import { getSchoolInfo } from '@/api/school'
 
 export default {
     name: "baseform",
     setup() {
         const { setImgUrl } = setImgUrlSetup()
-        const { rules, form, formRef, uploadRef, onReset, onSubmit, uploadImg, change } = formSetup()
+        const route = useRoute()
+        const btnText = ref('新增院校')
+        const schoolId = route.params.schoolId
+       
+        const { rules, form, formRef, uploadRef, onSubmit, uploadImg, change } = addSetup()
 
-        const handleAdd = () => {
-            onSubmit()
+        if(schoolId) {
+            btnText.value = '修改院校'
+            getSchoolInfo(schoolId).then(res => {
+                if(res.code === 200) {
+                    Object.assign(form, res.data)
+                }
+            })
         }
 
         return {
@@ -77,10 +88,10 @@ export default {
             formRef,
             rules,
             form,
-            handleAdd,
-            onReset,
+            btnText,
             uploadImg,
             change,
+            onSubmit,
             setImgUrl
         };
     },

@@ -3,7 +3,8 @@ import { useRouter } from 'vue-router'
 export default function useNav() {
     const router = useRouter();
     // 编辑
-    const handleEdit = () => {
+    const handleEdit = (item) => {
+        router.push({name: 'schoolAdd', params: { schoolId: item.schoolId}})
     }
     // 新增
     const handleAdd = () => {

@@ -28,19 +28,15 @@ export default function useAddMajor() {
         dialogVisible.value = true
     }
 
-    const handleClose = () => {
-
-    }
-
     const confirmAdd = () => {
         formRef.value.validate((valid) => {
             if (valid) {
                 addMajor(form).then(res => {
                     if(res.code === 200) {
-                        ElMessage.success("新增专业成功！")
+                        ElMessage.success("新增专业成功")
                         dialogVisible.value = false
                     }else {
-                        ElMessage.error(res.data)
+                        ElMessage.error('新增专业失败')
                     }
                 })
             } else {
@@ -55,7 +51,6 @@ export default function useAddMajor() {
         majorOptions,
         rules,
         formRef,
-        handleClose,
         confirmAdd,
         handleAdd
     }

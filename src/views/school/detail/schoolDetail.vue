@@ -61,8 +61,9 @@
 <script>
 import { onMounted, reactive } from "vue";
 import { useRoute } from 'vue-router'
-import { schoolDetail } from '@/api/school'
+import { getSchoolInfo } from '@/api/school'
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
+
 
 export default {
     name: "schoolDetail",
@@ -90,7 +91,7 @@ export default {
         }
 
         onMounted(() => {
-            schoolDetail(route.params.schoolId).then(res => {
+            getSchoolInfo(route.params.schoolId).then(res => {
                 if(res.code === 200) {
                     Object.assign(schoolInfo, res.data)
                 }

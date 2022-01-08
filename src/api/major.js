@@ -5,8 +5,8 @@ export const addMajor = data => {
         url: '/major',
         method: 'post',
         data
-    });
-};
+    })
+}
 
 
 export const majorList = query => {
@@ -14,6 +14,13 @@ export const majorList = query => {
         url: '/major',
         method: 'get',
         params: query
+    })
+}
+
+export const deleteMajor = id => {
+    return request({
+        url: `/major/${id}`,
+        method: 'delete'
     })
 }
 
