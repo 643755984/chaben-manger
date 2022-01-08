@@ -1,6 +1,7 @@
-import { router } from '@/router/index'
+import { useRouter } from 'vue-router'
 
 export default function useNav() {
+    const router = useRouter();
     // 编辑
     const handleEdit = () => {
     }
@@ -13,8 +14,9 @@ export default function useNav() {
     const handleDelete = (index) => {
     };
 
-    const handleDetail = (index) => {
-        router.push({name: 'schoolDetail'})
+    const handleDetail = (item) => {
+        console.log(item.schoolId)
+        router.push({name: 'schoolDetail', params: { schoolId: item.schoolId}})
     }
 
     return {

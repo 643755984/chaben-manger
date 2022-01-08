@@ -3,6 +3,7 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { addSchool } from '@/api/school.js'
+import { uploadFile } from '@/api/common.js'
 
 export default function useNav() {
     const rules = {
@@ -17,12 +18,15 @@ export default function useNav() {
         ],
     };
 
+    const uploadRef = ref(null)
+
     const form = reactive({
         schoolName: "",
         schoolType: "",
         schoolLevel: "",
         schoolAddress: '',
-        schoolLogo: ''
+        schoolLogo: '',
+        schoolEmail: ''
     });
 
     const route = useRoute();
@@ -31,16 +35,14 @@ export default function useNav() {
     const formRef = ref(null);
 
     // 提交
-    const onSubmit = (imgUrl) => {
-        form.schoolLogo = imgUrl
-
+    const onSubmit = () => {
         // 表单校验
         formRef.value.validate((valid) => {
             if (valid) {
                 addSchool(form).then(res => {
                     // console.log(res)
                     if(res.code === 200) {
-                        ElMessage.success("新增成功！")
+                        ElMessage.success("新增院校成功！")
                         store.commit("closeCurrentTag", {
                             $router: router,
                             $route: route
@@ -59,14 +61,29 @@ export default function useNav() {
     const onReset = () => {
         formRef.value.resetFields();
     };
-    
 
+    const uploadImg = (e) => {
+        let formData = new FormData();
+        formData.append("files", e.file);
+        uploadFile(formData).then(res => {
+            if(res.code === 200) {
+                form.schoolLogo = res.data
+            }
+        })
+    }
+
+    const change = () => {
+        uploadRef.value.submit();
+    }
 
     return {
+        uploadRef,
         formRef,
         rules,
         form,
         onReset,
-        onSubmit
+        onSubmit,
+        uploadImg,
+        change
     }
 }

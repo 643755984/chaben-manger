@@ -59,28 +59,24 @@
 </template>
 
 <script>
-
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
-import uploadImgSetup from './composables/uploadImgSetup'
 import formSetup from './composables/formSetup'
 
 export default {
     name: "baseform",
     setup() {
         const { setImgUrl } = setImgUrlSetup()
-        const { uploadRef, imgUrl, formRef, change, uploadImg} = uploadImgSetup()
-        const { rules, form, onReset, onSubmit } = formSetup()
+        const { rules, form, formRef, uploadRef, onReset, onSubmit, uploadImg, change } = formSetup()
 
         const handleAdd = () => {
-            onSubmit(imgUrl.value)
+            onSubmit()
         }
 
         return {
+            uploadRef,
             formRef,
             rules,
-            formRef,
             form,
-            uploadRef,
             handleAdd,
             onReset,
             uploadImg,

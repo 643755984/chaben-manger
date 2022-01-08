@@ -15,30 +15,30 @@
                     <div class="value">
                         <el-image
                             style="width: 100px; height: 100px"
-                            src="../../../assets/img/img.jpg"
-                            :fit="fit"
+                            :src="setImgUrl(schoolInfo.schoolLogo)"
+                            :fit="'contain'"
                         ></el-image>
                     </div>
                 </div>
                 <div class="line">
                     <div class="label">院校名称</div>
-                    <div class="value">嘉应学院</div>
+                    <div class="value">{{ schoolInfo.schoolName }}</div>
                 </div>
                 <div class="line">
                     <div class="label">院校类型</div>
-                    <div class="value">公办</div>
+                    <div class="value">{{ schoolInfo.schoolType }}</div>
                 </div>
                 <div class="line">
                     <div class="label">院校等级</div>
-                    <div class="value">普通本科</div>
+                    <div class="value">{{ schoolInfo.schoolLevel }}</div>
                 </div>
                 <div class="line">
                     <div class="label">院校Email</div>
-                    <div class="value">1654164@qq.com</div>
+                    <div class="value">{{ schoolInfo.schoolEmail }}</div>
                 </div>
                 <div class="line">
                     <div class="label">院校地址</div>
-                    <div class="value">份未发嗡嗡嗡我给</div>
+                    <div class="value">{{ schoolInfo.schoolAddress }}</div>
                 </div>
             </div>
             <div class="major-info">
@@ -59,38 +59,48 @@
     </div>
 </template>
 <script>
+import { onMounted, reactive } from "vue";
+import { useRoute } from 'vue-router'
+import { schoolDetail } from '@/api/school'
+import setImgUrlSetup from '@/setup/setImgUrlSetup'
+
 export default {
     name: "schoolDetail",
     setup() {
-        const tableData = [
+        const route = useRoute();
+        const { setImgUrl } = setImgUrlSetup()
+        let schoolInfo = reactive({
+            schoolName: "",
+            schoolType: "",
+            schoolLevel: "",
+            schoolAddress: '',
+            schoolLogo: '',
+            schoolEmail: ''
+        })
+        let tableData = [
             {
                 date: '2016-05-03',
                 name: 'Tom',
                 address: 'No. 189, Grove St, Los Angeles',
-            },
-            {
-                date: '2016-05-02',
-                name: 'Tom',
-                address: 'No. 189, Grove St, Los Angeles',
-            },
-            {
-                date: '2016-05-04',
-                name: 'Tom',
-                address: 'No. 189, Grove St, Los Angeles',
-            },
-            {
-                date: '2016-05-01',
-                name: 'Tom',
-                address: 'No. 189, Grove St, Los Angeles',
-            },
+            }
         ]
 
         const handleDelete = () => {
 
         }
 
+        onMounted(() => {
+            schoolDetail(route.params.schoolId).then(res => {
+                if(res.code === 200) {
+                    Object.assign(schoolInfo, res.data)
+                }
+            })
+        })
+
         return {
-            tableData
+            schoolInfo,
+            tableData,
+            setImgUrl
         };
     },
 };

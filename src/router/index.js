@@ -47,7 +47,7 @@ const routes = [
                         component: () => import ( /* webpackChunkName: "schoolAdd" */ "../views/school/add/addSchool.vue")
                     },
                     {
-                        path: 'detail',
+                        path: 'detail/:schoolId',
                         name: 'schoolDetail',
                         meta: {
                             title: '院校详情',
@@ -57,14 +57,24 @@ const routes = [
                     }
                 ]
             },
-            // {
-            //     path: "/school/list",
-            //     name: "school",
-            //     meta: {
-            //         title: '学校模块'
-            //     },
-            //     component: () => import ( /* webpackChunkName: "school" */ "../views/school/list/schoolList.vue")
-            // },
+            {
+                path: "major",
+                name: "major",
+                meta: {
+                    title: '专业管理',
+                    icon: 'menus'
+                },
+                children: [
+                    {
+                        path: 'list',
+                        name: 'majorList',
+                        meta: {
+                            title: '专业列表'
+                        },
+                        component: () => import ( /* webpackChunkName: "schoolList" */ "../views/major/list/majorList.vue")
+                    }
+                ]
+            },
             {
                 path: "/charts",
                 name: "basecharts",

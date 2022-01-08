@@ -27,7 +27,7 @@
                     <template #default="scope">
                         <el-button type="text" @click="handleEdit(scope.$index, scope.row)">编辑
                         </el-button>
-                        <el-button type="text" @click="handleDetail(scope.$index, scope.row)">详情
+                        <el-button type="text" @click="handleDetail(scope.row)">详情
                         </el-button>
                         <el-button type="text" class="red"
                             @click="handleDelete(scope.$index, scope.row)">删除</el-button>
