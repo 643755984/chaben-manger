@@ -69,19 +69,21 @@ export default {
     setup() {
         const { setImgUrl } = setImgUrlSetup()
         const route = useRoute()
-        const btnText = ref('新增院校')
         const schoolId = route.params.schoolId
-       
-        const { rules, form, formRef, uploadRef, onSubmit, uploadImg, change } = addSetup()
-
+        let btnText = ref('新增院校')
+        let isEdit = ref(false)
         if(schoolId) {
             btnText.value = '修改院校'
+            isEdit.value = true
             getSchoolInfo(schoolId).then(res => {
                 if(res.code === 200) {
                     Object.assign(form, res.data)
                 }
             })
         }
+       
+        const { rules, form, formRef, uploadRef, onSubmit, uploadImg, change } = addSetup(isEdit.value)
+
 
         return {
             uploadRef,

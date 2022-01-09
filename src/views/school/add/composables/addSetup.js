@@ -5,7 +5,7 @@ import { ElMessage } from "element-plus";
 import { addSchool } from '@/api/school.js'
 import { uploadFile } from '@/api/common.js'
 
-export default function useNav() {
+export default function useNav(isEdit) {
     const rules = {
         schoolName: [
             { required: true, message: "请输入表单名称", trigger: "blur" },
@@ -17,6 +17,7 @@ export default function useNav() {
             { required: true, message: "请选择学校等级", trigger: "blur" },
         ],
     };
+    const successText = isEdit ? '修改院校成功' : '新增院校成功'
 
     const uploadRef = ref(null)
 
@@ -42,7 +43,7 @@ export default function useNav() {
                 addSchool(form).then(res => {
                     // console.log(res)
                     if(res.code === 200) {
-                        ElMessage.success("新增院校成功！")
+                        ElMessage.success(successText)
                         store.commit("closeCurrentTag", {
                             $router: router,
                             $route: route
