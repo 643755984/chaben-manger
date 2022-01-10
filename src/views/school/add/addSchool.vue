@@ -61,7 +61,7 @@
 import { ref } from 'vue';
 import { useRoute } from 'vue-router'
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
-import addSetup from './composables/addSetup'
+import addSetup from './setup/addSetup'
 import { getSchoolInfo } from '@/api/school'
 
 export default {

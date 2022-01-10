@@ -11,7 +11,7 @@
             <div class="handle-box">
                 <div class="search">
                     <el-input v-model="page.majorName" placeholder="请输入专业名称" class="handle-input mr10"></el-input>
-                    <el-select v-model="page.majorType" class="m-2" placeholder="请选择专业类型">
+                    <el-select v-model="page.majorType" placeholder="请选择专业类型">
                         <el-option
                             v-for="item in majorOptions"
                             :key="item.value"
@@ -26,10 +26,12 @@
                     <el-button type="primary" icon="CirclePlus" @click="handleAdd">新增专业</el-button>
                 </div>
             </div>
-            <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
+            <el-table :data="majorList" border class="table" ref="multipleTable" header-cell-class-name="table-header">
                 <el-table-column type="index" width="50" />
+                <el-table-column prop="majorType" label="专业类型">
+                    <template #default="scope">{{ getTypeLabel(scope.row.majorType) }}</template>
+                </el-table-column>
                 <el-table-column prop="majorName" label="专业名称"></el-table-column>
-                <el-table-column prop="majorType" label="专业类型"></el-table-column>
                 <el-table-column label="操作" width="200" align="center">
                     <template #default="scope">
                         <el-button type="text" class="red"
@@ -75,38 +77,13 @@
     </div>
 </template>
 
-<script>
-import { onBeforeMount } from "vue";
-import tableSetup from './composables/tableSetup'
-import useAddMajor from './composables/addMajorSetup'
+<script setup>
+import tableSetup from './setup/tableSetup'
+import useAddMajor from './setup/addMajorSetup'
 
+let { page, majorList, changePage, handleSearch, handleDelete, getTypeLabel } = tableSetup()
+let { dialogVisible, form, majorOptions, rules, formRef, confirmAdd, handleAdd} = useAddMajor()
 
-export default {
-    name: "schoolList",
-    setup() {
-        let { page, tableData, changePage, handleSearch, handleDelete } = tableSetup()
-        let { dialogVisible, form, majorOptions, rules, formRef, confirmAdd, handleAdd} = useAddMajor()
-
-        onBeforeMount(() => {
-            handleSearch()
-        })
-
-        return {
-            majorOptions,
-            form,
-            dialogVisible,
-            tableData,
-            page,
-            rules,
-            formRef,
-            confirmAdd,
-            handleDelete,
-            handleAdd,
-            changePage,
-            handleSearch
-        };
-    },
-};
 </script>
 <style lang="scss" scoped>
 .handle-box {

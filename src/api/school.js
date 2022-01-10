@@ -22,3 +22,11 @@ export const getSchoolInfo = id => {
         method: 'get'
     })
 }
+
+export const getMajorList = query => {
+    return request({
+        url: '/major',
+        method: 'get',
+        params: query
+    })
+} 

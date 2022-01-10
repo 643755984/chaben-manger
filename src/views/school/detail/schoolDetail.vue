@@ -44,7 +44,7 @@
             </base-info>
             <base-info :text="'专业信息'">
                 <template v-slot:right>
-                    <el-button type="primary" icon="CirclePlus" @click="handleAdd">添加专业</el-button>
+                    <el-button type="primary" icon="CirclePlus" @click="addMajor">添加专业</el-button>
                 </template>
                 <template v-slot:default>
                     <el-table :data="tableData" border style="width: 100%">
@@ -60,59 +60,32 @@
                     </el-table>
                 </template>
             </base-info>
-        </div>    
+        </div>
+        
+        <add-major-dialog :dialogVisible="addMajorDialogVisible" @closeDialog="addMajorDialogVisible = false" />
+
     </div>
 </template>
-<script>
-import { onMounted, reactive } from "vue";
-import { useRoute } from 'vue-router'
-import { getSchoolInfo } from '@/api/school'
+<script setup>
+import { ref } from "vue"
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
+import schoolDetailSetup from './setup/schoolDetailSetup'
 import baseInfo from './components/baseInfo.vue'
+import addMajorDialog from './components/addMajor.vue'
 
+const { setImgUrl } = setImgUrlSetup()
+let { schoolInfo, tableData, handleDelete} = schoolDetailSetup()
 
-export default {
-    name: "schoolDetail",
-    components: { baseInfo },
-    setup() {
-        const route = useRoute();
-        const { setImgUrl } = setImgUrlSetup()
-        let schoolInfo = reactive({
-            schoolName: "",
-            schoolType: "",
-            schoolLevel: "",
-            schoolAddress: '',
-            schoolLogo: '',
-            schoolEmail: ''
-        })
-        let tableData = [
-            {
-                date: '2016-05-03',
-                name: 'Tom',
-                address: 'No. 189, Grove St, Los Angeles',
-            }
-        ]
+let addMajorDialogVisible = ref(false)
+// let emit = defineEmits(['dialogClose'])
 
-        const handleDelete = () => {
+const addMajor = () => {
+    console.log(111)
+    addMajorDialogVisible.value = true
+}
 
-        }
-
-        onMounted(() => {
-            getSchoolInfo(route.params.schoolId).then(res => {
-                if(res.code === 200) {
-                    Object.assign(schoolInfo, res.data)
-                }
-            })
-        })
-
-        return {
-            schoolInfo,
-            tableData,
-            setImgUrl
-        };
-    },
-};
 </script>
+
 <style lang="scss" scoped>
 .line {
     display: flex;

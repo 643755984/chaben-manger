@@ -9,7 +9,7 @@ export const addMajor = data => {
 }
 
 
-export const majorList = query => {
+export const getMajorList = query => {
     return request({
         url: '/major',
         method: 'get',

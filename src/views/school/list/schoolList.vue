@@ -45,8 +45,8 @@
 
 <script>
 import { onBeforeMount } from "vue";
-import tableSetup from './composables/tableSetup'
-import usePageSetup from './composables/pageSetup'
+import tableSetup from './setup/tableSetup'
+import usePageSetup from './setup/pageSetup'
 
 
 export default {
