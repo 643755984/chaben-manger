@@ -1,3 +1,4 @@
+import { onMounted } from 'vue'
 import { deleteMajor } from "@/api/major";
 import majorListSetup from '@/setup/majorListSetup'
 import { ElMessage } from "element-plus";
@@ -16,6 +17,10 @@ export default function useNav() {
             handleSearch()
         })
     };
+
+    onMounted(() => {
+        handleSearch()
+    })
 
     return {
         page,

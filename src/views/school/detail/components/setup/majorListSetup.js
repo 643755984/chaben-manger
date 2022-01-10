@@ -1,19 +1,18 @@
 import { ref } from "vue"
 import majorListSetup from '@/setup/majorListSetup'
 
-export default function useAddMajor(isEdit) {
+export default function useMajorList() {
     let {page, majorList, majorOptions, handleSearch, changePage, getTypeLabel } = majorListSetup()
 
-    let addMajorListRef = ref(null)
+    let majorSelection = ref([])
 
-    const handleSelectionChange = () => {
-
+    const handleSelectionChange = (val) => {
+        majorSelection.value = val
     }
 
     return {
         page,
         majorList,
-        addMajorListRef,
         majorOptions,
         handleSelectionChange,
         handleSearch,

@@ -18,10 +18,6 @@ export default function majorList(isEdit) {
 
     let majorList = ref([])
 
-    onMounted(() => {
-        handleSearch()
-    })
-
     const handleSearch = () => {
         getMajorList(page).then(res => {
             if(res.code === 200) {

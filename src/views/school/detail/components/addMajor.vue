@@ -3,6 +3,7 @@
         v-model="props.dialogVisible"
         title="添加专业"
         width="800px"
+        @open="openCallBack"
     >
         <div>
             <div class="handle-box">
@@ -21,7 +22,6 @@
                 </div>
             </div>
             <el-table
-                ref="addMajorListRef"
                 border
                 :data="majorList"
                 style="width: 100%"
@@ -40,15 +40,15 @@
         <template #footer>
             <span class="dialog-footer">
                 <el-button @click="close">关闭</el-button>
-                <el-button type="primary">确认</el-button>
+                <el-button type="primary" @click="confirm">确认</el-button>
             </span>
         </template>
     </el-dialog>
 </template>
 <script setup>
-// import { defineProps } from 'vue'
-import addMajorSetup from '../setup/addMajorSetup'
+import addMajorSetup from './setup/majorListSetup'
 
+let { majorList, page, majorOptions, handleSelectionChange, handleSearch, getTypeLabel} = addMajorSetup()
 const props = defineProps({
   dialogVisible: {
       type: Boolean,
@@ -56,10 +56,18 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['closeDialog'])
-let { majorList, addMajorListRef, page, majorOptions, handleSelectionChange, handleSearch, getTypeLabel} = addMajorSetup()
 
 const close = () => {
     emit('closeDialog')
+}
+
+const openCallBack = () => {
+    handleSearch()
+}
+
+const confirm = () => {
+    let params = {
+    }
 }
 
 </script>

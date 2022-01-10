@@ -77,10 +77,8 @@ const { setImgUrl } = setImgUrlSetup()
 let { schoolInfo, tableData, handleDelete} = schoolDetailSetup()
 
 let addMajorDialogVisible = ref(false)
-// let emit = defineEmits(['dialogClose'])
 
 const addMajor = () => {
-    console.log(111)
     addMajorDialogVisible.value = true
 }
 
