@@ -33,8 +33,23 @@ export const getMajorList = query => {
 
 export const addMajorOnSchool = data => {
     return request({
-        url: '/school/major',
+        url: '/schoolmajor',
         method: 'post',
         data
+    })
+}
+
+export const getSchoolMajorList = query => {
+    return request({
+        url: '/schoolmajor',
+        method: 'get',
+        params: query
+    })
+}
+
+export const deleteSchoolMajor = id => {
+    return request({
+        url: `/schoolmajor/${id}`,
+        method: 'delete'
     })
 }

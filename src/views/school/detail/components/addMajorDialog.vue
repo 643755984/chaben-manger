@@ -72,8 +72,9 @@ const handleSelectionChange = (val) => {
     majorSelection.value = val
 }
 
-const close = () => {
-    emit('closeDialog')
+const close = (isConfirm = false) => {
+    console.log(isConfirm)
+    emit('closeDialog', isConfirm)
 }
 
 const openCallBack = () => {
@@ -91,7 +92,7 @@ const confirm = () => {
     addMajorOnSchool(params).then(res => {
         if(res.code === 200) {
             ElMessage.success('添加专业成功')
-            close()
+            close(true)
         }
     })
 }

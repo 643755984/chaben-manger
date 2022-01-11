@@ -14,18 +14,6 @@ export default function useNav(isEdit) {
         schoolEmail: ''
     })
 
-    let tableData = [
-        {
-            date: '2016-05-03',
-            name: 'Tom',
-            address: 'No. 189, Grove St, Los Angeles',
-        }
-    ]
-
-    const handleDelete = () => {
-
-    }
-
     onMounted(() => {
         getSchoolInfo(route.params.schoolId).then(res => {
             if(res.code === 200) {
@@ -35,8 +23,6 @@ export default function useNav(isEdit) {
     })
 
     return {
-        schoolInfo,
-        tableData,
-        handleDelete
+        schoolInfo
     }
 }

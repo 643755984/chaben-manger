@@ -47,17 +47,29 @@
                     <el-button type="primary" icon="CirclePlus" @click="showAddMajorDialog">添加专业</el-button>
                 </template>
                 <template v-slot:default>
-                    <el-table :data="tableData" border style="width: 100%">
+                    <el-table :data="schoolMajorList" border style="width: 100%">
                         <el-table-column type="index" width="50" />
-                        <el-table-column prop="date" label="专业名称" />
-                        <el-table-column prop="name" label="专业类型" />
+                        <el-table-column prop="name" label="专业类型">
+                            <template  #default="scope">
+                                <span>{{scope.row.majorInfo.majorType}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="date" label="专业名称">
+                            <template  #default="scope">
+                                <span>{{scope.row.majorInfo.majorName}}</span>
+                            </template>
+                        </el-table-column>
                         <el-table-column label="操作" width="200" align="center">
                             <template #default="scope">
                                 <el-button type="text" class="red"
-                                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                                    @click="handleDelete(scope.row)">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
+                    <div class="pagination">
+                        <el-pagination background layout="total, prev, pager, next" :current-page="page.pageNum"
+                            :page-size="page.pageSize" :total="page.pageTotal" @current-change="changePage"></el-pagination>
+                    </div>
                 </template>
             </base-info>
         </div>
@@ -70,11 +82,13 @@
 import { ref } from "vue"
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
 import schoolDetailSetup from './setup/schoolDetailSetup'
+import schoolMajorListSetup from './setup/schoolMajorListSetup'
 import baseInfo from './components/baseInfo.vue'
 import addMajorDialog from './components/addMajorDialog.vue'
 
 const { setImgUrl } = setImgUrlSetup()
-let { schoolInfo, tableData, handleDelete} = schoolDetailSetup()
+let { schoolInfo } = schoolDetailSetup()
+let { schoolMajorList, page, handleDelete, changePage, handleSearch } = schoolMajorListSetup()
 
 let addMajorDialogVisible = ref(false)
 
@@ -82,7 +96,8 @@ const showAddMajorDialog = () => {
     addMajorDialogVisible.value = true
 }
 
-const closeAddMajorDialog = () => {
+const closeAddMajorDialog = (isConfirm) => {
+    if(isConfirm === true) handleSearch()
     addMajorDialogVisible.value = false
 }
 
@@ -99,5 +114,8 @@ const closeAddMajorDialog = () => {
         text-align: right;
         flex-shrink: 0;
     }
+}
+.red {
+    color: #ff0000;
 }
 </style>
