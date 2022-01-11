@@ -1,12 +1,12 @@
-import request from '../utils/request';
+import request from '../utils/request'
 
 export const addSchool = data => {
     return request({
         url: '/school',
         method: 'post',
         data
-    });
-};
+    })
+}
 
 export const schoolList = query => {
     return request({
@@ -29,4 +29,12 @@ export const getMajorList = query => {
         method: 'get',
         params: query
     })
-} 
+}
+
+export const addMajorOnSchool = data => {
+    return request({
+        url: '/school/major',
+        method: 'post',
+        data
+    })
+}

@@ -1,7 +1,7 @@
-import { reactive, ref } from "vue";
-import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+import { reactive, ref } from "vue"
+import { useStore } from "vuex"
+import { useRoute, useRouter } from "vue-router"
+import { ElMessage } from "element-plus"
 import { addSchool } from '@/api/school.js'
 import { uploadFile } from '@/api/common.js'
 

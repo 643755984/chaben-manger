@@ -3,7 +3,7 @@ import { getSchoolInfo } from '@/api/school'
 import { useRoute } from 'vue-router'
 
 export default function useNav(isEdit) {
-    const route = useRoute();
+    const route = useRoute()
 
     let schoolInfo = reactive({
         schoolName: "",

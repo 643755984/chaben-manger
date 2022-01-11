@@ -4,6 +4,7 @@
         title="添加专业"
         width="800px"
         @open="openCallBack"
+        :before-close="close"
     >
         <div>
             <div class="handle-box">
@@ -33,8 +34,9 @@
                 </el-table-column>
                 <el-table-column property="majorName" label="专业名称" />
             </el-table>
-            <div class="page">
-                <el-pagination background layout="prev, pager, next" :total="page.pageTotal"></el-pagination>
+            <div class="pagination">
+                <el-pagination background layout="total, prev, pager, next" :current-page="page.pageNum"
+                    :page-size="page.pageSize" :total="page.pageTotal" @current-change="changePage"></el-pagination>
             </div>
         </div>
         <template #footer>
@@ -46,9 +48,12 @@
     </el-dialog>
 </template>
 <script setup>
-import addMajorSetup from './setup/majorListSetup'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+import majorListSetup from '@/setup/majorListSetup'
+import { addMajorOnSchool } from '@/api/school'
+import { ElMessage } from "element-plus"
 
-let { majorList, page, majorOptions, handleSelectionChange, handleSearch, getTypeLabel} = addMajorSetup()
 const props = defineProps({
   dialogVisible: {
       type: Boolean,
@@ -56,6 +61,16 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['closeDialog'])
+const route = useRoute()
+const schoolId = route.params.schoolId
+
+let {page, majorList, majorOptions, handleSearch, changePage, getTypeLabel } = majorListSetup()
+
+let majorSelection = ref([])
+
+const handleSelectionChange = (val) => {
+    majorSelection.value = val
+}
 
 const close = () => {
     emit('closeDialog')
@@ -67,7 +82,18 @@ const openCallBack = () => {
 
 const confirm = () => {
     let params = {
+        schoolId,
+        majorIds: []
     }
+    for(let i=0;i<majorSelection.value.length;i++) {
+        params.majorIds.push(majorSelection.value[i].id)
+    }
+    addMajorOnSchool(params).then(res => {
+        if(res.code === 200) {
+            ElMessage.success('添加专业成功')
+            close()
+        }
+    })
 }
 
 </script>
@@ -90,8 +116,5 @@ const confirm = () => {
 .mr10 {
     margin-right: 10px;
 }
-.page {
-    margin-top: 10px;
-    text-align: center;
-}
+
 </style>

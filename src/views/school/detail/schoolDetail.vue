@@ -44,7 +44,7 @@
             </base-info>
             <base-info :text="'专业信息'">
                 <template v-slot:right>
-                    <el-button type="primary" icon="CirclePlus" @click="addMajor">添加专业</el-button>
+                    <el-button type="primary" icon="CirclePlus" @click="showAddMajorDialog">添加专业</el-button>
                 </template>
                 <template v-slot:default>
                     <el-table :data="tableData" border style="width: 100%">
@@ -62,7 +62,7 @@
             </base-info>
         </div>
         
-        <add-major-dialog :dialogVisible="addMajorDialogVisible" @closeDialog="addMajorDialogVisible = false" />
+        <add-major-dialog :dialogVisible="addMajorDialogVisible" @closeDialog="closeAddMajorDialog" />
 
     </div>
 </template>
@@ -71,15 +71,19 @@ import { ref } from "vue"
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
 import schoolDetailSetup from './setup/schoolDetailSetup'
 import baseInfo from './components/baseInfo.vue'
-import addMajorDialog from './components/addMajor.vue'
+import addMajorDialog from './components/addMajorDialog.vue'
 
 const { setImgUrl } = setImgUrlSetup()
 let { schoolInfo, tableData, handleDelete} = schoolDetailSetup()
 
 let addMajorDialogVisible = ref(false)
 
-const addMajor = () => {
+const showAddMajorDialog = () => {
     addMajorDialogVisible.value = true
+}
+
+const closeAddMajorDialog = () => {
+    addMajorDialogVisible.value = false
 }
 
 </script>
