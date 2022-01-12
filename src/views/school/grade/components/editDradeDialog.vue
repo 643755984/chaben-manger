@@ -12,19 +12,19 @@
                     <el-date-picker v-model="form.year" type="year" placeholder="选择年份">
                     </el-date-picker>
                 </el-form-item>
-                <el-form-item label="录取最低分">
+                <el-form-item label="录取最低分" prop="minGrade">
                     <el-input v-model="form.minGrade"></el-input>
                 </el-form-item>
-                <el-form-item label="录取平均分">
+                <el-form-item label="录取平均分" prop="averageGrade">
                     <el-input v-model="form.averageGrade"></el-input>
                 </el-form-item>
-                <el-form-item label="过线分">
+                <el-form-item label="过线分" prop="passGrade">
                     <el-input v-model="form.passGrade"></el-input>
                 </el-form-item>
-                <el-form-item label="招生人数">
+                <el-form-item label="招生人数" prop="recruitNumberPeople">
                     <el-input v-model="form.recruitNumberPeople"></el-input>
                 </el-form-item>
-                <el-form-item label="录取人数">
+                <el-form-item label="录取人数" prop="admitNumberPeople">
                     <el-input v-model="form.admitNumberPeople"></el-input>
                 </el-form-item>
             </el-form>
@@ -55,6 +55,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['closeDialog'])
 const route = useRoute ()
+const formRef = ref(null)
 const { schoolId, majorId } = route.query
 let title = ref('新增分数')
 
@@ -70,6 +71,8 @@ const form = reactive({
 })
 
 const close = (isConfirm = false) => {
+    // console.log(formRef)
+    formRef.value.resetFields();
     emit('closeDialog', isConfirm)
 }
 

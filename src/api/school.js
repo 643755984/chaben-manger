@@ -63,3 +63,12 @@ export const addGrade = data => {
         data
     })
 }
+
+// 获取院校分数列表
+export const getGradeList = query => {
+    return request({
+        url: '/schoolgrade',
+        method: 'get',
+        params: query
+    })
+}

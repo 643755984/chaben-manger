@@ -6,7 +6,11 @@
             </template>
             <template #default>
                 <el-timeline>
-                    <el-timeline-item timestamp="2022" placement="top">
+                    <el-timeline-item 
+                    v-for="(item, index) in gradeList" 
+                    :key="index" 
+                    :timestamp="item.year" 
+                    placement="top">
                         <el-card>
                             <div class="card">
                                 <div class="opera">
@@ -15,23 +19,23 @@
                                 <div class="main">
                                     <div class="item">
                                         <span class="label">最低分：</span>
-                                        <span class="value">203</span>
+                                        <span class="value">{{ item.minGrade }}</span>
                                     </div>
                                     <div class="item">
                                         <span class="label">平均分：</span>
-                                        <span class="value">203</span>
+                                        <span class="value">{{ item.averageGrade }}</span>
                                     </div>
                                     <div class="item">
                                         <span class="label">过线分：</span>
-                                        <span class="value">203</span>
+                                        <span class="value">{{ item.passGrade }}</span>
                                     </div>
                                     <div class="item">
                                         <span class="label">招生人数：</span>
-                                        <span class="value">203</span>
+                                        <span class="value">{{ item.recruitNumberPeople }}</span>
                                     </div>
                                     <div class="item">
                                         <span class="label">录取人数：</span>
-                                        <span class="value">203</span>
+                                        <span class="value">{{ item.admitNumberPeople }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -52,9 +56,11 @@ import { ref } from 'vue'
 import { useRoute  } from 'vue-router'
 import BaseInfo from '@/components/baseInfo.vue'
 import EditDradeDialog from './components/editDradeDialog.vue';
+import gradeListSetup from './setup/gradeListSetup'
 
 const route = useRoute ()
 const { schoolId, majorId } = route.query
+let { gradeList } = gradeListSetup()
 
 const editDradeDialogVisible = ref(false)
 let mode = ref(0)  // 0 新增 1 修改
@@ -64,12 +70,12 @@ const close = () => {
 }
 
 const handleEdit = () => {
-    mode = 1
+    mode.value = 1
     editDradeDialogVisible.value = true
 }
 
 const handleAdd = () => {
-    mode = 0
+    mode.value = 0
     editDradeDialogVisible.value = true
 }
 

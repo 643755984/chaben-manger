@@ -94,6 +94,14 @@ const routes = [
                 ]
             },
             {
+                path: "/aa",
+                name: "aa",
+                meta: {
+                    title: '表单'
+                },
+                component: () => import ( /* webpackChunkName: "charts" */ "../views/BaseForm.vue")
+            },
+            {
                 path: "/charts",
                 name: "basecharts",
                 meta: {
