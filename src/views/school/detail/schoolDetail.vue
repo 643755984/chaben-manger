@@ -61,8 +61,8 @@
                         </el-table-column>
                         <el-table-column label="操作" width="200" align="center">
                             <template #default="scope">
-                                <el-button type="text" class="red"
-                                    @click="handleDelete(scope.row)">删除</el-button>
+                                <el-button type="text" @click="openGradePage(scope.row)">分数管理</el-button>
+                                <el-button type="text" class="red" @click="handleDelete(scope.row)">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -83,12 +83,12 @@ import { ref } from "vue"
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
 import schoolDetailSetup from './setup/schoolDetailSetup'
 import schoolMajorListSetup from './setup/schoolMajorListSetup'
-import baseInfo from './components/baseInfo.vue'
+import baseInfo from '@/components/baseInfo.vue'
 import addMajorDialog from './components/addMajorDialog.vue'
 
 const { setImgUrl } = setImgUrlSetup()
 let { schoolInfo } = schoolDetailSetup()
-let { schoolMajorList, page, handleDelete, changePage, handleSearch } = schoolMajorListSetup()
+let { schoolMajorList, page, handleDelete, changePage, handleSearch, openGradePage } = schoolMajorListSetup()
 
 let addMajorDialogVisible = ref(false)
 

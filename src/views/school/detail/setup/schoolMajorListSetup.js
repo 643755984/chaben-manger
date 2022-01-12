@@ -1,10 +1,12 @@
 import { ref, reactive, onMounted } from "vue";
 import { getSchoolMajorList, deleteSchoolMajor } from '@/api/school'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from "element-plus"
 
 export default function useNav() {
     const route = useRoute()
+    const router = useRouter()
+
     const schoolId = route.params.schoolId
     let page = reactive({
         schoolId: '',
@@ -43,11 +45,17 @@ export default function useNav() {
         })
     }
 
+    const openGradePage = (item) => {
+        let majorId = item.majorInfo.id
+        router.push({ name: 'schoolGrade', query: { schoolId, majorId}})
+    }
+
     return {
         page,
         schoolMajorList,
         handleDelete,
         changePage,
-        handleSearch
+        handleSearch,
+        openGradePage
     }
 }

@@ -47,9 +47,19 @@ export const getSchoolMajorList = query => {
     })
 }
 
+// 删除院校专业
 export const deleteSchoolMajor = id => {
     return request({
         url: `/schoolmajor/${id}`,
         method: 'delete'
+    })
+}
+
+// 院校专业添加分数
+export const addGrade = data => {
+    return request({
+        url: '/schoolgrade',
+        method: 'post',
+        data
     })
 }

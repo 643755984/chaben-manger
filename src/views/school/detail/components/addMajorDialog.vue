@@ -73,7 +73,6 @@ const handleSelectionChange = (val) => {
 }
 
 const close = (isConfirm = false) => {
-    console.log(isConfirm)
     emit('closeDialog', isConfirm)
 }
 

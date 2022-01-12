@@ -14,7 +14,7 @@
                     <el-button type="primary" icon="search" @click="handleSearch">搜索</el-button>
                 </div>
                 <div>
-                    <el-button type="primary" icon="CirclePlus" @click="handleAdd">新增学校</el-button>
+                    <el-button type="primary" icon="CirclePlus" @click="handleAdd">新增院校</el-button>
                 </div>
             </div>
             <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">

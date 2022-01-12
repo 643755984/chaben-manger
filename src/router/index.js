@@ -63,6 +63,15 @@ const routes = [
                             hidden: true
                         },
                         component: () => import ( /* webpackChunkName: "schoolDetail" */ "../views/school/detail/schoolDetail.vue")
+                    },
+                    {
+                        path: 'grade',
+                        name: 'schoolGrade',
+                        meta: {
+                            title: '院校分数',
+                            hidden: true
+                        },
+                        component: () => import ( /* webpackChunkName: "schoolDetail" */ "../views/school/grade/schoolGrade.vue")
                     }
                 ]
             },
@@ -106,20 +115,6 @@ const routes = [
                     permission: true
                 },
                 component: () => import ( /* webpackChunkName: "permission" */ "../views/Permission.vue")
-            }, {
-                path: "/i18n",
-                name: "i18n",
-                meta: {
-                    title: '国际化语言'
-                },
-                component: () => import ( /* webpackChunkName: "i18n" */ "../views/I18n.vue")
-            },{
-                path: "/icon",
-                name: "icon",
-                meta: {
-                    title: '自定义图标'
-                },
-                component: () => import ( /* webpackChunkName: "icon" */ "../views/Icon.vue")
             }, {
                 path: '/404',
                 name: '404',
