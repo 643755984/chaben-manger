@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="crumbs">
+        <!-- <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
                     <i class="el-icon-lx-calendar"></i> 表单
                 </el-breadcrumb-item>
                 <el-breadcrumb-item>基本表单</el-breadcrumb-item>
             </el-breadcrumb>
-        </div>
+        </div> -->
         <div class="container">
             <div class="form-box">
                 <el-form ref="formRef" :rules="rules" :model="form" label-width="80px">
@@ -57,51 +57,121 @@
     </div>
 </template>
 
-<script>
-import { ref } from 'vue';
-import { useRoute } from 'vue-router'
+<script setup>
+import { ref, reactive, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from "vuex"
+import { ElMessage } from "element-plus"
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
-import addSetup from './setup/addSetup'
-import { getSchoolInfo } from '@/api/school'
+import { getSchoolInfo, updateSchool } from '@/api/school'
 
-export default {
-    name: "baseform",
-    setup() {
-        const { setImgUrl } = setImgUrlSetup()
-        const route = useRoute()
-        const schoolId = route.params.schoolId
-        let btnText = ref('新增院校')
-        let isEdit = ref(false)
-        if(schoolId) {
-            btnText.value = '修改院校'
-            isEdit.value = true
-            getSchoolInfo(schoolId).then(res => {
-                if(res.code === 200) {
-                    Object.assign(form, res.data)
-                }
-            })
-        }
-       
-        const { rules, form, formRef, uploadRef, onSubmit, uploadImg, change } = addSetup(isEdit.value)
+const { setImgUrl } = setImgUrlSetup()
 
+const route = useRoute();
+const router = useRouter();
+const store = useStore();
+const formRef = ref(null);
+const schoolId = route.params.schoolId
 
-        return {
-            uploadRef,
-            formRef,
-            rules,
-            form,
-            btnText,
-            uploadImg,
-            change,
-            onSubmit,
-            setImgUrl
-        };
-    },
+let btnText = ref('新增院校')
+let isEdit = ref(false)
+const uploadRef = ref(null)
+
+const form = reactive({
+    schoolName: "",
+    schoolType: "",
+    schoolLevel: "",
+    schoolAddress: '',
+    schoolLogo: '',
+    schoolEmail: ''
+});
+
+const rules = {
+    schoolName: [
+        { required: true, message: "请输入表单名称", trigger: "blur" },
+    ],
+    schoolType: [
+        { required: true, message: "请选择学校类型", trigger: "blur" },
+    ],
+    schoolLevel: [
+        { required: true, message: "请选择学校等级", trigger: "blur" },
+    ],
 };
+
+onMounted(() => {
+    isEdit.value = schoolId ? true : false
+    if(isEdit.value) {
+        btnText.value = '修改院校'
+        isEdit.value = true
+        getSchoolInfo(schoolId).then(res => {
+            if(res.code === 200) {
+                Object.assign(form, res.data)
+            }
+        })
+    }
+})
+
+
+ // 提交
+const onSubmit = () => {
+    // 表单校验
+    formRef.value.validate((valid) => {
+        if (valid) {
+            if(isEdit.value) {
+                updateSchoolFn()
+            }else {
+                addSchoolFn()
+            }
+        } else {
+            return false;
+        }
+    });
+};
+
+const updateSchoolFn = () => {
+    updateSchool(form).then(res => {
+        if(res.code === 200) {
+            ElMessage.success("修改成功")
+            store.commit("closeCurrentTag", {
+                $router: router,
+                $route: route
+            });
+        }else {
+            ElMessage.error(res.data)
+        }
+    })
+}
+
+const addSchoolFn = () => {
+    addSchool(form).then(res => {
+        if(res.code === 200) {
+            ElMessage.success('新增成功')
+            store.commit("closeCurrentTag", {
+                $router: router,
+                $route: route
+            });
+        }else {
+            ElMessage.error(res.data)
+        }
+    })
+}
+
+const uploadImg = (e) => {
+    let formData = new FormData();
+    formData.append("files", e.file);
+    uploadFile(formData).then(res => {
+        if(res.code === 200) {
+            form.schoolLogo = res.data
+        }
+    })
+}
+
+const change = () => {
+    uploadRef.value.submit();
+}
 </script>
 <style lang="scss" scoped>
 .lh-18 {
     line-height: 18px;
 }
-
 </style>

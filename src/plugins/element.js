@@ -1,15 +1,8 @@
 import ElementPlus from 'element-plus'
-// import { createI18n } from 'vue-i18n'
 import 'element-plus/dist/index.css'
-import { Fold, Expand, Bell, HomeFilled, Menu, Close, Search, CirclePlus, Plus } from '@element-plus/icons-vue'
+import { Fold, Expand, Bell, HomeFilled, Menu, Close, Search, CirclePlus, Plus, School, Document, CaretBottom } from '@element-plus/icons-vue'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
-// import messages from '../utils/i18n'
 
-// const i18n = createI18n({
-//   locale: localeZH.name,
-//   fallbackLocale: localeEN.name,
-//   messages,
-// })
 const icons = {
   Fold,
   Expand,
@@ -17,9 +10,12 @@ const icons = {
   HomeFilled,
   menus: Menu,
   Close,
-  Search, 
+  Search,
   CirclePlus,
-  Plus
+  Plus,
+  School,
+  Document,
+  CaretBottom
 }
 
 export default (app) => {

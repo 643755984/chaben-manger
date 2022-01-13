@@ -30,7 +30,7 @@
                         <el-button type="text" @click="handleDetail(scope.row)">详情
                         </el-button>
                         <el-button type="text" class="red"
-                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                            @click="handleDelete(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -46,14 +46,11 @@
 <script>
 import { onBeforeMount } from "vue";
 import tableSetup from './setup/tableSetup'
-import usePageSetup from './setup/pageSetup'
-
 
 export default {
     name: "schoolList",
     setup() {
-        let { handleEdit, handleAdd, handleDelete, handleDetail } = tableSetup()
-        let { page, changePage, tableData, handleSearch } = usePageSetup()
+        let { page, changePage, tableData, handleSearch, handleEdit, handleAdd, handleDelete, handleDetail } = tableSetup()
         
         onBeforeMount(() => {
             handleSearch()

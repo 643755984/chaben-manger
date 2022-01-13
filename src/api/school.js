@@ -8,11 +8,29 @@ export const addSchool = data => {
     })
 }
 
-export const schoolList = query => {
+// 获取院校列表
+export const getSchoolList = query => {
     return request({
         url: '/school',
         method: 'get',
         params: query
+    })
+}
+
+// 修改院校
+export const updateSchool = data => {
+    return request({
+        url: `/school/${data.schoolId}`,
+        method: 'put',
+        data
+    })
+}
+
+// 删除院校
+export const deleteSchool = schoolId => {
+    return request({
+        url: `/school/${schoolId}`,
+        method: 'delete'
     })
 }
 
@@ -67,8 +85,25 @@ export const addGrade = data => {
 // 获取院校分数列表
 export const getGradeList = query => {
     return request({
-        url: '/schoolgrade',
+        url: `/schoolgrade`,
         method: 'get',
         params: query
+    })
+}
+
+// 获取院校分数
+export const getGradeByOne = id => {
+    return request({
+        url: `/schoolgrade/${id}`,
+        method: 'get'
+    })
+}
+
+// 更新院校分数
+export const updateGrade = data => {
+    return request({
+        url: `/schoolgrade/${data.id}`,
+        method: 'put',
+        data
     })
 }

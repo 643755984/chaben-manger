@@ -8,7 +8,7 @@
     >
         <div class="form">
             <el-form ref="formRef" :model="form" label-width="90px">
-                <el-form-item label="年份">
+                <el-form-item label="年份" prop="year">
                     <el-date-picker v-model="form.year" type="year" placeholder="选择年份">
                     </el-date-picker>
                 </el-form-item>
@@ -41,17 +41,21 @@
 import { reactive, ref } from 'vue'
 import { useRoute  } from 'vue-router'
 import { ElMessage } from "element-plus"
-import { addGrade } from '@/api/school'
+import { addGrade, getGradeByOne, updateGrade } from '@/api/school'
 
 const props = defineProps({
-  dialogVisible: {
-      type: Boolean,
-      require: true
-  },
-  mode: {
-      type: Number,
-      require: true
-  }
+    dialogVisible: {
+        type: Boolean,
+        require: true
+    },
+    mode: {
+        type: Number,
+        require: true
+    },
+    gradeId: {
+        type: Number,
+        require: false
+    }
 })
 const emit = defineEmits(['closeDialog'])
 const route = useRoute ()
@@ -60,6 +64,7 @@ const { schoolId, majorId } = route.query
 let title = ref('新增分数')
 
 const form = reactive({
+    id: '',
     schoolId: schoolId,
     majorId: majorId,
     year: '',
@@ -71,13 +76,22 @@ const form = reactive({
 })
 
 const close = (isConfirm = false) => {
-    // console.log(formRef)
     formRef.value.resetFields();
     emit('closeDialog', isConfirm)
 }
 
 const openCallBack = () => {
-    title.value = props.mode === 0 ? '新增分数' : '修改分数'
+    if(props.mode === 0) {
+        title.value = '新增分数'
+    }else if(props.mode === 1) {
+        title.value = '修改分数'
+        getGradeByOne(props.gradeId).then(res => {
+            if(res.code === 200) {
+                Object.assign(form, res.data)
+            }
+        })
+    }
+    
 }
 
 const confirm = () => {
@@ -85,6 +99,13 @@ const confirm = () => {
         addGrade(form).then(res => {
             if(res.code === 200) {
                 ElMessage.success('添加分数成功')
+                close(true)
+            }
+        })
+    }else if(props.mode === 1) {
+        updateGrade(form).then(res => {
+            if(res.code === 200) {
+                ElMessage.success('更新分数成功')
                 close(true)
             }
         })

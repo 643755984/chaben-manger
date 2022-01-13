@@ -18,6 +18,7 @@ export default function useNav() {
     onMounted(setGradeList)
 
     return {
-        gradeList
+        gradeList,
+        setGradeList
     }
 }

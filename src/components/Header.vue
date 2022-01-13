@@ -5,7 +5,7 @@
             <el-icon v-if="!collapse"><fold></fold></el-icon>
             <el-icon v-else><expand></expand></el-icon>
         </div>
-        <div class="logo">后台管理系统</div>
+        <div class="logo">插本后台管理系统</div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 消息中心 -->
@@ -24,14 +24,11 @@
                 <!-- 用户名下拉菜单 -->
                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">
                     <span class="el-dropdown-link">
-                        {{username}}
-                        <i class="el-icon-caret-bottom"></i>
+                        {{userInfo.nickname}}
+                        <el-icon><caret-bottom /></el-icon>
                     </span>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">
-                                <el-dropdown-item>项目仓库</el-dropdown-item>
-                            </a>
                             <el-dropdown-item command="user">个人中心</el-dropdown-item>
                             <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
@@ -42,16 +39,17 @@
     </div>
 </template>
 <script>
-import { computed, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { computed, onMounted } from "vue"
+import { useStore } from "vuex"
+import { useRouter } from "vue-router"
 export default {
     setup() {
-        const username = localStorage.getItem("ms_username");
         const message = 2;
 
         const store = useStore();
-        const collapse = computed(() => store.state.collapse);
+        const collapse = computed(() => store.state.collapse)
+        const userInfo = computed(() => store.state.userInfo)
+
         // 侧边栏折叠
         const collapseChage = () => {
             store.commit("handleCollapse", !collapse.value);
@@ -67,7 +65,7 @@ export default {
         const router = useRouter();
         const handleCommand = (command) => {
             if (command == "loginout") {
-                localStorage.removeItem("ms_username");
+                localStorage.removeItem("userInfo");
                 router.push("/login");
             } else if (command == "user") {
                 router.push("/user");
@@ -75,7 +73,7 @@ export default {
         };
 
         return {
-            username,
+            userInfo,
             message,
             collapse,
             collapseChage,

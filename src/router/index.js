@@ -1,6 +1,5 @@
 import {createRouter, createWebHashHistory} from "vue-router";
 import { adaptRouter, adaptSidebar } from '@/utils/adaptRouter'
-// import cloneDeep from 'lodash/cloneDeep'
 
 const routes = [
     {
@@ -26,7 +25,7 @@ const routes = [
                 name: "school",
                 meta: {
                     title: '院校管理',
-                    icon: 'menus'
+                    icon: 'School'
                 },
                 children: [
                     {
@@ -80,7 +79,7 @@ const routes = [
                 name: "major",
                 meta: {
                     title: '专业管理',
-                    icon: 'menus'
+                    icon: 'Document'
                 },
                 children: [
                     {
@@ -93,84 +92,76 @@ const routes = [
                     }
                 ]
             },
+            // {
+            //     path: "/charts",
+            //     name: "basecharts",
+            //     meta: {
+            //         title: '图表'
+            //     },
+            //     component: () => import ( /* webpackChunkName: "charts" */ "../views/BaseCharts.vue")
+            // }, {
+            //     path: "/tabs",
+            //     name: "tabs",
+            //     meta: {
+            //         title: 'tab标签'
+            //     },
+            //     component: () => import ( /* webpackChunkName: "tabs" */ "../views/Tabs.vue")
+            // },{
+            //     path: "/permission",
+            //     name: "permission",
+            //     meta: {
+            //         title: '权限管理',
+            //         permission: true
+            //     },
+            //     component: () => import ( /* webpackChunkName: "permission" */ "../views/Permission.vue")
+            // }, {
+            //     path: '/404',
+            //     name: '404',
+            //     meta: {
+            //         title: '找不到页面'
+            //     },
+            //     component: () => import (/* webpackChunkName: "404" */ '../views/404.vue')
+            // }, {
+            //     path: '/403',
+            //     name: '403',
+            //     meta: {
+            //         title: '没有权限'
+            //     },
+            //     component: () => import (/* webpackChunkName: "403" */ '../views/403.vue')
+            // }, 
             {
-                path: "/aa",
-                name: "aa",
-                meta: {
-                    title: '表单'
-                },
-                component: () => import ( /* webpackChunkName: "charts" */ "../views/BaseForm.vue")
-            },
-            {
-                path: "/charts",
-                name: "basecharts",
-                meta: {
-                    title: '图表'
-                },
-                component: () => import ( /* webpackChunkName: "charts" */ "../views/BaseCharts.vue")
-            }, {
-                path: "/tabs",
-                name: "tabs",
-                meta: {
-                    title: 'tab标签'
-                },
-                component: () => import ( /* webpackChunkName: "tabs" */ "../views/Tabs.vue")
-            },{
-                path: "/permission",
-                name: "permission",
-                meta: {
-                    title: '权限管理',
-                    permission: true
-                },
-                component: () => import ( /* webpackChunkName: "permission" */ "../views/Permission.vue")
-            }, {
-                path: '/404',
-                name: '404',
-                meta: {
-                    title: '找不到页面'
-                },
-                component: () => import (/* webpackChunkName: "404" */ '../views/404.vue')
-            }, {
-                path: '/403',
-                name: '403',
-                meta: {
-                    title: '没有权限'
-                },
-                component: () => import (/* webpackChunkName: "403" */ '../views/403.vue')
-            }, {
                 path: '/user',
                 name: 'user',
                 meta: {
-                    title: '个人中心'
+                    title: '个人中心',
+                    hidden: true
                 },
-                component: () => import (/* webpackChunkName: "user" */ '../views/User.vue')
-            }, {
-                path: '/editor',
-                name: 'editor',
-                meta: {
-                    title: '富文本编辑器'
-                },
-                component: () => import (/* webpackChunkName: "editor" */ '../views/Editor.vue')
+                component: () => import (/* webpackChunkName: "user" */ '../views/user/User.vue')
             }
         ]
-    }, {
+    }, 
+    {
         path: "/login",
         name: "Login",
         meta: {
             title: '登录'
         },
         component: () => import ( /* webpackChunkName: "login" */ "../views/Login.vue")
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: '404',
+        meta: {
+            title: '找不到页面'
+        },
+        component: () => import (/* webpackChunkName: "404" */ '../views/404.vue')
     }
 ];
 
 
-// routes = changeRoutes(routes[1].children, [], '', '')
-// console.log(changeRoutes(routes[1].children, [], '', ''))
-// routes[1].children = changeRoutes(routes[1].children, [], '', '')
-// console.log('rou--->', routes)
+
 let vueRouter = adaptRouter(routes)
 let slideBar = adaptSidebar(routes)
-// console.log('vur--->', vueRouter)
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -179,7 +170,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     document.title = `${to.meta.title} | vue-manage-system`;
-    const role = localStorage.getItem('ms_username');
+    const role = localStorage.getItem('userInfo');
     if (!role && to.path !== '/login') {
         next('/login');
     } else if (to.meta.permission) {
@@ -192,24 +183,5 @@ router.beforeEach((to, from, next) => {
     }
 });
 
-
-// function adaptVurRouter(routes) {
-//     routes = cloneDeep(routes)
-//     routes[1].children = changeRoutes(routes[1].children, [], '', '')
-//     return routes
-// }
-
-// function changeRoutes(oldRoute, newRoutes, path, name) {
-//     for(let i=0;i<oldRoute.length;i++) {
-//         if(!oldRoute[i].children) {
-//             if(path) oldRoute[i].path = path + `/${oldRoute[i].path}`
-//             if(name) oldRoute[i].name = name + `-${oldRoute[i].name}`
-//             newRoutes.push(oldRoute[i])
-//         }else {
-//             changeRoutes(oldRoute[i].children, newRoutes, path + `/${oldRoute[i].path}`, name + `${oldRoute[i].name}`)
-//         }
-//     }
-//     return newRoutes
-// }
 
 export { router, slideBar };
