@@ -1,10 +1,8 @@
-import { ref, computed  } from 'vue'
-
-export default function useNav() {
-    const url = ref('http://127.0.0.1:7001')
+export default function setImgUrl() {
+    const url = import.meta.env.VITE_BASE_API
 
     const setImgUrl = (str) => {
-        return url.value + str
+        return url + str
     }
 
     return {

@@ -10,12 +10,12 @@
                     </template>
                     <div class="info">
                         <div class="info-image" @click="showDialog">
-                            <img :src="avatarImg" />
+                            <img :src="setImgUrl(userInfo.headerImg)" />
                             <span class="info-edit">
                                 <i class="el-icon-lx-camerafill"></i>
                             </span>
                         </div>
-                        <div class="info-name">{{ name }}</div>
+                        <div class="info-name">{{ userInfo.nickname }}</div>
                         <div class="info-desc">不可能！我的代码怎么可能会有bug！</div>
                     </div>
                 </el-card>
@@ -27,13 +27,12 @@
                             <span>账户编辑</span>
                         </div>
                     </template>
-                    <el-form label-width="90px">
-                        <el-form-item label="用户名："> {{ name }} </el-form-item>
+                    <el-form ref="formRef" label-width="90px">
                         <el-form-item label="旧密码：">
-                            <el-input type="password" v-model="form.old"></el-input>
+                            <el-input type="password" v-model="form.oldPassword"></el-input>
                         </el-form-item>
                         <el-form-item label="新密码：">
-                            <el-input type="password" v-model="form.new"></el-input>
+                            <el-input type="password" v-model="form.newPassword"></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -58,75 +57,65 @@
     </div>
 </template>
 
-<script>
-import { reactive, ref } from "vue"
+<script setup>
+import { reactive, ref, computed } from "vue"
 import { useStore } from "vuex"
+import setImgUrlSetup from '@/setup/setImgUrlSetup'
 import VueCropper from "vue-cropperjs"
 import "cropperjs/dist/cropper.css"
-import avatar from "../../assets/img/img.jpg"
-export default {
-    name: "user",
-    components: {
-        VueCropper,
-    },
-    setup() {
-        const name = localStorage.getItem("ms_username");
-        const form = reactive({
-            old: "",
-            new: "",
-        });
-        const onSubmit = () => {};
+import { ElMessage } from "element-plus"
+import { updatePassword } from '@/api/user'
 
-        const avatarImg = ref(avatar);
-        const imgSrc = ref("");
-        const cropImg = ref("");
-        const dialogVisible = ref(false);
-        const cropper = ref(null);
+const store = useStore();
+const userInfo = computed(() => store.state.userInfo)
+const { setImgUrl } = setImgUrlSetup()
+const form = reactive({
+    id: userInfo.value.id,
+    oldPassword: "",
+    newPassword: "",
+})
+const formRef = ref(null)
+const onSubmit = () => {
+    updatePassword(form).then(res => {
+        if(res.code === 200) {
+            ElMessage.success('修改成功')
+            formRef.value.resetFields();
+        }
+    })
+}
 
-        const showDialog = () => {
-            dialogVisible.value = true;
-            imgSrc.value = avatarImg.value;
-        };
+const imgSrc = ref("");
+const cropImg = ref("");
+const dialogVisible = ref(false);
+const cropper = ref(null);
 
-        const setImage = (e) => {
-            const file = e.target.files[0];
-            if (!file.type.includes("image/")) {
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                dialogVisible.value = true;
-                imgSrc.value = event.target.result;
-                cropper.value && cropper.value.replace(event.target.result);
-            };
-            reader.readAsDataURL(file);
-        };
+const showDialog = () => {
+    dialogVisible.value = true;
+    imgSrc.value = avatarImg.value;
+}
 
-        const cropImage = () => {
-            cropImg.value = cropper.value.getCroppedCanvas().toDataURL();
-        };
+const setImage = (e) => {
+    const file = e.target.files[0];
+    if (!file.type.includes("image/")) {
+        return
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        dialogVisible.value = true;
+        imgSrc.value = event.target.result;
+        cropper.value && cropper.value.replace(event.target.result);
+    }
+    reader.readAsDataURL(file);
+}
 
-        const saveAvatar = () => {
-            avatarImg.value = cropImg.value;
-            dialogVisible.value = false;
-        };
+const cropImage = () => {
+    cropImg.value = cropper.value.getCroppedCanvas().toDataURL();
+}
 
-        return {
-            name,
-            form,
-            onSubmit,
-            cropper,
-            avatarImg,
-            imgSrc,
-            cropImg,
-            showDialog,
-            dialogVisible,
-            setImage,
-            cropImage,
-            saveAvatar,
-        };
-    },
-};
+const saveAvatar = () => {
+    avatarImg.value = cropImg.value;
+    dialogVisible.value = false;
+}
 </script>
 
 <style scoped>
