@@ -18,7 +18,7 @@ const routes = [
                     title: '系统首页',
                     icon: 'HomeFilled'
                 },
-                component: () => import ( /* webpackChunkName: "dashboard" */ "../views/Dashboard.vue")
+                component: () => import ( /* webpackChunkName: "dashboard" */ "../views/dashborad/Dashboard.vue")
             },
             {
                 path: "school",
@@ -99,13 +99,6 @@ const routes = [
             //         title: '图表'
             //     },
             //     component: () => import ( /* webpackChunkName: "charts" */ "../views/BaseCharts.vue")
-            // }, {
-            //     path: "/tabs",
-            //     name: "tabs",
-            //     meta: {
-            //         title: 'tab标签'
-            //     },
-            //     component: () => import ( /* webpackChunkName: "tabs" */ "../views/Tabs.vue")
             // },{
             //     path: "/permission",
             //     name: "permission",
