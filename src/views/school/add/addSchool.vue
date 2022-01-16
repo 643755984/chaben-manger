@@ -63,7 +63,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from "vuex"
 import { ElMessage } from "element-plus"
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
-import { getSchoolInfo, updateSchool } from '@/api/school'
+import { getSchoolInfo, updateSchool, addSchool } from '@/api/school'
+import { uploadFile } from '@/api/common'
 
 const { setImgUrl } = setImgUrlSetup()
 
