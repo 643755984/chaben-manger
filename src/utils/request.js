@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const service = axios.create({
-    baseURL: import.meta.env.VITE_BASE_API + import.meta.env.VITE_BASE_URL,
+    // baseURL: import.meta.env.VITE_BASE_API + import.meta.env.VITE_BASE_URL,
+    baseURL: import.meta.env.VITE_BASE_URL,
     timeout: 5000
 });
 
