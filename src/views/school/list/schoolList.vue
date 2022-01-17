@@ -20,9 +20,21 @@
             <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
                 <el-table-column type="index" width="50" />
                 <el-table-column prop="schoolName" label="学校名称"></el-table-column>
-                <el-table-column prop="schoolType" label="学校类型"></el-table-column>
-                <el-table-column prop="schoolLevel" label="学校等级"></el-table-column>
-                <el-table-column prop="schoolAddress" label="学校地址"></el-table-column>
+                <el-table-column prop="schoolType" label="学校类型">
+                    <template #default="scope">
+                        <span>{{ setSchoolType(scope.row.schoolType) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="schoolLevel" label="学校等级">
+                    <template #default="scope">
+                        <span>{{ setSchoolLevel(scope.row.schoolLevel) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="schoolAddress" label="学校地址">
+                    <template #default="scope">
+                        <span class="ellipsis-line">{{ scope.row.schoolAddress }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" width="200" align="center">
                     <template #default="scope">
                         <el-button type="text" @click="handleEdit(scope.row)">编辑
@@ -43,31 +55,18 @@
     </div>
 </template>
 
-<script>
-import { onBeforeMount } from "vue";
+<script setup>
+import { onBeforeMount } from "vue"
 import tableSetup from './setup/tableSetup'
+import schoolInfoSetup from '@/setup/schoolInfoSetup'
 
-export default {
-    name: "schoolList",
-    setup() {
-        let { page, changePage, tableData, handleSearch, handleEdit, handleAdd, handleDelete, handleDetail } = tableSetup()
+let { page, changePage, tableData, handleSearch, handleEdit, handleAdd, handleDelete, handleDetail } = tableSetup()
+let { setSchoolType, setSchoolLevel } = schoolInfoSetup()
         
-        onBeforeMount(() => {
-            handleSearch()
-        })
+onBeforeMount(() => {
+    handleSearch()
+})
 
-        return {
-            tableData,
-            page,
-            handleDetail,
-            handleDelete,
-            handleEdit,
-            handleAdd,
-            changePage,
-            handleSearch,
-        };
-    },
-};
 </script>
 <style lang="scss" scoped>
 .handle-box {

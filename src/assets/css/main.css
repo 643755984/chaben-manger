@@ -111,22 +111,8 @@ a {
     padding-bottom: 0;
 }
 
-/*Upload*/
 
-.pure-button {
-    width: 150px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    color: #fff;
-    border-radius: 3px;
-}
-
-.g-core-image-corp-container .info-aside {
-    height: 45px;
-}
-
-
+/* 上传图片 */
 .avatar-uploader .el-upload {
     display: flex;
     align-items: center;
@@ -152,23 +138,10 @@ a {
     display: block;
 }
 
-
-/*VueEditor*/
-
-.ql-container {
-    min-height: 400px;
-}
-
-.ql-snow .ql-tooltip {
-    transform: translateX(117.5px) translateY(10px) !important;
-}
-
-.editor-btn {
-    margin-top: 20px;
-}
-
-/*markdown*/
-
-.v-note-wrapper .v-note-panel {
-    min-height: 500px;
+/* 超出一行省略 */
+.ellipsis-line {
+    padding:8px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
