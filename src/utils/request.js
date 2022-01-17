@@ -26,9 +26,24 @@ service.interceptors.response.use(
         Promise.reject()
     },
     error => {
-        console.log(error);
-        return Promise.reject();
+        // console.log(error);
+        // return Promise.reject();
+        const { response } = error
+        if(response) {
+            // 请求以发出，但不在2xx以内
+            errorHandle(response.status, response.data)
+        }
     }
 );
+
+const errorHandle = (status, other) => {
+    switch (status) {
+        case 404:
+            ElMessage.error('请求资源不存在')
+            break
+        default:
+            ElMessage.error(other)
+    }
+}
 
 export default service;
