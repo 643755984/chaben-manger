@@ -4,7 +4,7 @@ import majorListSetup from '@/setup/majorListSetup'
 import { ElMessage } from "element-plus";
 
 export default function useNav() {
-    let { page, majorList, majorOptions, handleSearch, changePage, getTypeLabel } = majorListSetup()
+    let { page, majorList, handleSearch, changePage, majorTypeOptions } = majorListSetup()
 
     // 删除操作
     const handleDelete = (item) => {
@@ -25,10 +25,9 @@ export default function useNav() {
     return {
         page,
         majorList,
-        majorOptions,
+        majorTypeOptions,
         handleDelete,
         changePage,
-        handleSearch,
-        getTypeLabel
+        handleSearch
     }
 }

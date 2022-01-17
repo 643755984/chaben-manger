@@ -26,11 +26,11 @@
                     </div>
                     <div class="line">
                         <div class="label">院校类型</div>
-                        <div class="value">{{ schoolInfo.schoolType }}</div>
+                        <div class="value">{{ setSchoolType(schoolInfo.schoolType) }}</div>
                     </div>
                     <div class="line">
                         <div class="label">院校等级</div>
-                        <div class="value">{{ schoolInfo.schoolLevel }}</div>
+                        <div class="value">{{ setSchoolLevel(schoolInfo.schoolLevel) }}</div>
                     </div>
                     <div class="line">
                         <div class="label">院校Email</div>
@@ -51,12 +51,12 @@
                         <el-table-column type="index" width="50" />
                         <el-table-column prop="name" label="专业类型">
                             <template  #default="scope">
-                                <span>{{scope.row.majorInfo.majorType}}</span>
+                                <span>{{ scope.row.majorInfo.majorTypeInfo.typeName }}</span>
                             </template>
                         </el-table-column>
                         <el-table-column prop="date" label="专业名称">
                             <template  #default="scope">
-                                <span>{{scope.row.majorInfo.majorName}}</span>
+                                <span>{{ scope.row.majorInfo.majorName }}</span>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作" width="200" align="center">
@@ -73,8 +73,8 @@
                 </template>
             </base-info>
         </div>
-        
-        <add-major-dialog :dialogVisible="addMajorDialogVisible" @closeDialog="closeAddMajorDialog" />
+
+        <add-major-for-school-dialog :dialogVisible="addMajorDialogVisible" @closeDialog="closeAddMajorDialog" />
 
     </div>
 </template>
@@ -83,12 +83,14 @@ import { ref } from "vue"
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
 import schoolDetailSetup from './setup/schoolDetailSetup'
 import schoolMajorListSetup from './setup/schoolMajorListSetup'
+import schoolInfoSetup from '@/setup/schoolInfoSetup'
 import baseInfo from '@/components/baseInfo.vue'
-import addMajorDialog from './components/addMajorDialog.vue'
+import addMajorForSchoolDialog from './components/addMajorForSchoolDialog.vue'
 
 const { setImgUrl } = setImgUrlSetup()
 let { schoolInfo } = schoolDetailSetup()
 let { schoolMajorList, page, handleDelete, changePage, handleSearch, openGradePage } = schoolMajorListSetup()
+const { setSchoolType, setSchoolLevel } = schoolInfoSetup()
 
 let addMajorDialogVisible = ref(false)
 

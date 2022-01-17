@@ -32,7 +32,7 @@ const routes = [
                         path: 'list',
                         name: 'schoolList',
                         meta: {
-                            title: '院校列表'
+                            title: '院校管理'
                         },
                         component: () => import ( /* webpackChunkName: "schoolList" */ "../views/school/list/schoolList.vue")
                     },
@@ -86,9 +86,17 @@ const routes = [
                         path: 'list',
                         name: 'majorList',
                         meta: {
-                            title: '专业列表'
+                            title: '专业管理'
                         },
                         component: () => import ( /* webpackChunkName: "schoolList" */ "../views/major/list/majorList.vue")
+                    },
+                    {
+                        path: 'type',
+                        name: 'majorType',
+                        meta: {
+                            title: '专业类型管理'
+                        },
+                        component: () => import ( /* webpackChunkName: "schoolList" */ "../views/major/type/majorType.vue")
                     }
                 ]
             },

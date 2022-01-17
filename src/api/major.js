@@ -24,3 +24,10 @@ export const deleteMajor = id => {
     })
 }
 
+export const getMajorTypeList = query => {
+    return request({
+        url: '/majortype',
+        method: 'get',
+        params: query
+    })
+}

@@ -1,13 +1,9 @@
 import { ref, reactive, onMounted } from "vue";
-import { getMajorList } from '@/api/major'
+import { getMajorList, getMajorTypeList } from '@/api/major'
 
-export default function majorList(isEdit) {
+export default function majorList() {
 
-    const majorOptions = ref([
-        {label: '文科', value: 0},
-        {label: '理科', value: 1}
-    ])
-
+    let majorTypeOptions = ref([])
     let page = reactive({
         majorType: '',
         majorName: '',
@@ -15,8 +11,11 @@ export default function majorList(isEdit) {
         pageSize: 10,
         pageTotal: 12
     });
-
     let majorList = ref([])
+
+    onMounted(() => {
+        getMajorTypeListFn()
+    })
 
     const handleSearch = () => {
         getMajorList(page).then(res => {
@@ -27,25 +26,24 @@ export default function majorList(isEdit) {
         })  
     }
 
+    const getMajorTypeListFn = () => {
+        getMajorTypeList({ pageNum: 1, pageSize: 50 }).then(res => {
+            if(res.code === 200) {
+                majorTypeOptions.value = res.data.rows
+            }
+        })
+    }
+
     const changePage  = (index) => {
         page.pageNum = index
         handleSearch()
     }
 
-    const getTypeLabel = (type) => {
-        const obj = {
-            '0': '文科',
-            '1': '理科'
-        }
-        return obj[type]
-    }
-
     return {
         page,
         majorList,
-        majorOptions,
+        majorTypeOptions,
         handleSearch,
-        changePage,
-        getTypeLabel
+        changePage
     }
 }
