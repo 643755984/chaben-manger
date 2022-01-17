@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from 'axios'
+import { ElMessage } from "element-plus"
 
 const service = axios.create({
-    // baseURL: import.meta.env.VITE_BASE_API + import.meta.env.VITE_BASE_URL,
     baseURL: import.meta.env.VITE_BASE_URL,
     timeout: 5000
 });
@@ -19,11 +19,11 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
     response => {
-        if (response.status === 200) {
-            return response.data;
-        } else {
-            Promise.reject();
+        if(response.status === 200) {
+            if(response.data.code !== 200) ElMessage.error(response.data.data)
+            return response.data
         }
+        Promise.reject()
     },
     error => {
         console.log(error);

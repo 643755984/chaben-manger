@@ -145,8 +145,6 @@ const updateSchoolFn = () => {
                 $router: router,
                 $route: route
             });
-        }else {
-            ElMessage.error(res.data)
         }
     })
 }
@@ -159,8 +157,6 @@ const addSchoolFn = () => {
                 $router: router,
                 $route: route
             });
-        }else {
-            ElMessage.error(res.data)
         }
     })
 }

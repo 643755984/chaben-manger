@@ -140,7 +140,7 @@ a {
 
 /* 超出一行省略 */
 .ellipsis-line {
-    padding:8px;
+    padding: 0 8px;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
