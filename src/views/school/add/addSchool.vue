@@ -16,16 +16,20 @@
                     </el-form-item>
                     <el-form-item label="院校类型" prop="schoolType">
                         <el-select v-model="form.schoolType" placeholder="请选择">
-                            <el-option key="bbk" label="公办院校" value="1"></el-option>
-                            <el-option key="xtc" label="民办院校" value="2"></el-option>
+                            <el-option 
+                            v-for="(item, index) in schoolType" 
+                            :key="index + 'type'"
+                            :label="item.label" 
+                            :value="item.value"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="学校等级" prop="region">
                         <el-select v-model="form.schoolLevel" placeholder="请选择">
-                            <el-option key="bbk" label="普通院校" value="1"></el-option>
-                            <el-option key="xtc" label="985院校" value="2"></el-option>
-                            <el-option key="xtc" label="211院校" value="3"></el-option>
-                            <el-option key="xtc" label="双一流" value="4"></el-option>
+                            <el-option 
+                            v-for="(item, index) in schoolLevel" 
+                            :key="index + 'level'"
+                            :label="item.label"
+                            :value="item.value"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="院校邮箱" prop="schoolEmail">
@@ -62,11 +66,15 @@ import { ref, reactive, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from "vuex"
 import { ElMessage } from "element-plus"
-import setImgUrlSetup from '@/setup/setImgUrlSetup'
+// api
 import { getSchoolInfo, updateSchool, addSchool } from '@/api/school'
 import { uploadFile } from '@/api/common'
+// setup
+import setImgUrlSetup from '@/setup/setImgUrlSetup'
+import schoolInfoSetup from '@/setup/schoolInfoSetup'
 
 const { setImgUrl } = setImgUrlSetup()
+const { schoolType, schoolLevel } = schoolInfoSetup()
 
 const route = useRoute();
 const router = useRouter();

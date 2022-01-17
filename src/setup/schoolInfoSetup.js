@@ -22,6 +22,8 @@ export default function schoolInfoSetup() {
     }
 
     return {
+        schoolType,
+        schoolLevel,
         setSchoolType,
         setSchoolLevel
     }
