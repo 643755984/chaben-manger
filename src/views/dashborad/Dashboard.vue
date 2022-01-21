@@ -90,8 +90,9 @@
                         </el-table-column>
                         <el-table-column width="60">
                             <template>
-                                <i class="el-icon-edit"></i>
-                                <i class="el-icon-delete"></i>
+                                <!-- <i class="el-icon-edit"></i> -->
+                                <!-- <i class="el-icon-delete"></i> -->
+                                <span>编辑</span>
                             </template>
                         </el-table-column>
                     </el-table>
