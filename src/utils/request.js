@@ -42,7 +42,7 @@ const errorHandle = (status, other) => {
             ElMessage.error('请求资源不存在')
             break
         default:
-            ElMessage.error(other)
+            ElMessage.error(other.data)
     }
 }
 

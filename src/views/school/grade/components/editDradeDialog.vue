@@ -9,7 +9,7 @@
         <div class="form">
             <el-form ref="formRef" :model="form" label-width="90px">
                 <el-form-item label="年份" prop="year">
-                    <el-date-picker v-model="form.year" type="year" placeholder="选择年份">
+                    <el-date-picker v-model="form.year" type="year" placeholder="选择年份" value-format="YYYY">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="录取最低分" prop="minGrade">

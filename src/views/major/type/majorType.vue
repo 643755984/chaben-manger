@@ -51,7 +51,8 @@ const handleAdd = () => {
 }
 
 const close = (isAdd) => {
-    if(isAdd === true) handleSearch
+    console.log(isAdd)
+    if(isAdd === true) handleSearch()
     dialogVisible.value = false
 }
 

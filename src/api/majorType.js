@@ -2,7 +2,7 @@ import request from '../utils/request';
 
 export const addMajorType = data => {
     return request({
-        url: '/majortype',
+        url: '/majortype/create',
         method: 'post',
         data
     })
@@ -11,7 +11,7 @@ export const addMajorType = data => {
 
 export const getMajorTypeList = query => {
     return request({
-        url: '/majortype',
+        url: '/majortype/list',
         method: 'get',
         params: query
     })
@@ -19,8 +19,9 @@ export const getMajorTypeList = query => {
 
 export const deleteMajorType = id => {
     return request({
-        url: `/majortype/${id}`,
-        method: 'delete'
+        url: '/majortype/delete',
+        method: 'post',
+        data: { id }
     })
 }
 
