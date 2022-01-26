@@ -31,8 +31,8 @@
 </template>
 <script setup>
 import { reactive, ref } from 'vue'
-import { addMajor } from "@/api/major";
-import { ElMessage } from "element-plus";
+import { addMajor } from "@/api/major"
+import { ElMessage } from "element-plus"
 
 const formRef = ref(null)
 const props = defineProps({
@@ -81,7 +81,7 @@ const confirmAdd = () => {
 }
 
 const close = (isConfirm = false) => {
-    formRef.value.resetFields();
+    formRef.value.resetFields()
     emit('closeDialog', isConfirm)
 }
 </script>

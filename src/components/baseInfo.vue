@@ -28,6 +28,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .base-info {
+    padding: 15px 0;
     .title {
         position: relative;
         padding-left: 20px;

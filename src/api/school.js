@@ -43,14 +43,6 @@ export const getSchoolInfo = id => {
     })
 }
 
-export const getMajorList = query => {
-    return request({
-        url: '/major',
-        method: 'get',
-        params: query
-    })
-}
-
 export const addMajorOnSchool = data => {
     return request({
         url: '/schoolmajor/create',
@@ -109,5 +101,23 @@ export const updateGrade = data => {
         url: '/grade/edit',
         method: 'post',
         data
+    })
+}
+
+// 发布公告
+export const addNotice = data => {
+    return request({
+        url: '/notice/create',
+        method: 'post',
+        data
+    })
+}
+
+// 获取公告列表
+export const getNoticeList = query => {
+    return request({
+        url: '/notice/list',
+        method: 'get',
+        params: query
     })
 }

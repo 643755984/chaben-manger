@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-        v-model="props.dialogVisible"
+        v-model="dialogVisible"
         title="添加专业"
         width="800px"
         @open="openCallBack"
@@ -49,31 +49,27 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
 import majorListSetup from '@/setup/majorListSetup'
 import { addMajorOnSchool } from '@/api/school'
 import { ElMessage } from "element-plus"
 
 const props = defineProps({
-  dialogVisible: {
-      type: Boolean,
-      require: true
-  }
+    schoolId: {
+        type: String,
+        require: true
+    }
 })
-const emit = defineEmits(['closeDialog'])
-const route = useRoute()
-const schoolId = route.params.schoolId
-
+const emit = defineEmits(['updateMajorList'])
 let {page, majorList, majorTypeOptions, handleSearch, changePage } = majorListSetup()
-
 let majorSelection = ref([])
+let dialogVisible = ref(false)
 
 const handleSelectionChange = (val) => {
     majorSelection.value = val
 }
 
-const close = (isConfirm = false) => {
-    emit('closeDialog', isConfirm)
+const close = () => {
+    dialogVisible.value = false
 }
 
 const openCallBack = () => {
@@ -82,7 +78,7 @@ const openCallBack = () => {
 
 const confirm = () => {
     let params = {
-        schoolId,
+        schoolId: props.schoolId,
         majorIds: []
     }
     for(let i=0;i<majorSelection.value.length;i++) {
@@ -92,11 +88,13 @@ const confirm = () => {
     addMajorOnSchool(params).then(res => {
         if(res.code === 200) {
             ElMessage.success('添加专业成功')
-            close(true)
+            emit('updateMajorList')
+            close()
         }
     })
 }
 
+defineExpose({ dialogVisible })
 </script>
 <style lang="scss">
 .handle-box {

@@ -44,7 +44,7 @@
             </base-info>
             <base-info :text="'专业信息'">
                 <template v-slot:right>
-                    <el-button type="primary" icon="CirclePlus" @click="showAddMajorDialog">添加专业</el-button>
+                    <el-button type="primary" icon="CirclePlus" @click="addMajor">添加专业</el-button>
                 </template>
                 <template v-slot:default>
                     <el-table :data="schoolMajorList" border style="width: 100%">
@@ -72,35 +72,71 @@
                     </div>
                 </template>
             </base-info>
+            <base-info :text="'公告信息'">
+                <template v-slot:right>
+                    <el-button type="primary" icon="CirclePlus" @click="releaseNotice">发布公告</el-button>
+                </template>
+                <template v-slot:default>
+                    <el-table :data="noticelist" border style="width: 100%">
+                        <el-table-column type="index" width="50" />
+                        <el-table-column prop="title" label="标题">
+                        </el-table-column>
+                        <el-table-column prop="link" label="链接地址"></el-table-column>
+                        <el-table-column label="操作" width="200" align="center">
+                            <template #default="scope">
+                                <el-button type="text" class="red" @click="deleteNotice(scope.row)">删除</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div class="pagination">
+                        <el-pagination background layout="total, prev, pager, next" :current-page="noticePage.pageNum"
+                            :page-size="noticePage.pageSize" :total="noticePage.pageTotal" @current-change="changeNoticePage"></el-pagination>
+                    </div>
+                </template>
+            </base-info>
         </div>
 
-        <add-major-for-school-dialog :dialogVisible="addMajorDialogVisible" @closeDialog="closeAddMajorDialog" />
+        <AddMajorForSchoolDialog
+        ref="majorDialogRef"
+        :schoolId="schoolId"
+        @updateMajorList="handleSearch" />
+
+        <NoticeDialog
+        ref="noticeDialogRef"
+        :schoolId="schoolId"
+        @updateNoticeList="getNoticeListFn" />
 
     </div>
 </template>
 <script setup>
 import { ref } from "vue"
+import { useRoute } from 'vue-router'
 import setImgUrlSetup from '@/setup/setImgUrlSetup'
 import schoolDetailSetup from './setup/schoolDetailSetup'
 import schoolMajorListSetup from './setup/schoolMajorListSetup'
+import noticeSetup from './setup/noticeSetup'
 import schoolInfoSetup from '@/setup/schoolInfoSetup'
 import baseInfo from '@/components/baseInfo.vue'
-import addMajorForSchoolDialog from './components/addMajorForSchoolDialog.vue'
+import AddMajorForSchoolDialog from './components/addMajorForSchoolDialog.vue'
+import NoticeDialog from '../components/noticeDialog.vue'
 
+const route = useRoute()
+const schoolId = route.params.schoolId
 const { setImgUrl } = setImgUrlSetup()
 let { schoolInfo } = schoolDetailSetup()
-let { schoolMajorList, page, handleDelete, changePage, handleSearch, openGradePage } = schoolMajorListSetup()
+let { schoolMajorList, page, handleDelete, changePage, handleSearch, openGradePage } = schoolMajorListSetup(schoolId)
+let { noticePage, noticelist, deleteNotice, changeNoticePage, getNoticeListFn } = noticeSetup(schoolId)
 const { setSchoolType, setSchoolLevel } = schoolInfoSetup()
 
-let addMajorDialogVisible = ref(false)
+let majorDialogRef = ref(null)
+let noticeDialogRef = ref(null)
 
-const showAddMajorDialog = () => {
-    addMajorDialogVisible.value = true
+const addMajor = () => {
+    majorDialogRef.value.dialogVisible = true
 }
 
-const closeAddMajorDialog = (isConfirm) => {
-    if(isConfirm === true) handleSearch()
-    addMajorDialogVisible.value = false
+const releaseNotice = () => {
+    noticeDialogRef.value.dialogVisible = true
 }
 
 </script>

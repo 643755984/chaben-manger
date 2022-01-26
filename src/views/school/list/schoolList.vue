@@ -35,8 +35,10 @@
                         <span class="ellipsis-line">{{ scope.row.schoolAddress }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="200" align="center">
+                <el-table-column label="操作" width="240" align="center">
                     <template #default="scope">
+                        <el-button type="text" @click="releaseNotice(scope.row)">发布公告
+                        </el-button>
                         <el-button type="text" @click="handleEdit(scope.row)">编辑
                         </el-button>
                         <el-button type="text" @click="handleDetail(scope.row)">详情
@@ -52,20 +54,29 @@
             </div>
         </div>
 
+        <NoticeDialog :schoolId="schoolId" ref="noticeDialogRef" />
     </div>
 </template>
 
 <script setup>
-import { onBeforeMount } from "vue"
+import { ref, onBeforeMount } from "vue"
 import tableSetup from './setup/tableSetup'
 import schoolInfoSetup from '@/setup/schoolInfoSetup'
+import NoticeDialog from '../components/noticeDialog.vue'
 
 let { page, changePage, tableData, handleSearch, handleEdit, handleAdd, handleDelete, handleDetail } = tableSetup()
 let { setSchoolType, setSchoolLevel } = schoolInfoSetup()
-        
+let noticeDialogRef = ref(null)
+let schoolId = ref('')
+
 onBeforeMount(() => {
     handleSearch()
 })
+
+const releaseNotice = (item) => {
+    schoolId.value = item.schoolId
+    noticeDialogRef.value.dialogVisible = true
+}
 
 </script>
 <style lang="scss" scoped>

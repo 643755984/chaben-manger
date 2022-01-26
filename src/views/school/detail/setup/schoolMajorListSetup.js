@@ -1,13 +1,10 @@
 import { ref, reactive, onMounted } from "vue";
 import { getSchoolMajorList, deleteSchoolMajor } from '@/api/school'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { ElMessage } from "element-plus"
 
-export default function useNav() {
-    const route = useRoute()
+export default function useNav(schoolId) {
     const router = useRouter()
-
-    const schoolId = route.params.schoolId
     let page = reactive({
         schoolId: '',
         pageNum: 1,
