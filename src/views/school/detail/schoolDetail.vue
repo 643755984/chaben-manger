@@ -40,6 +40,23 @@
                         <div class="label">院校地址</div>
                         <div class="value">{{ schoolInfo.schoolAddress }}</div>
                     </div>
+                    <div class="line">
+                        <div class="label">院校官网</div>
+                        <div class="value">{{ schoolInfo.schoolWeb }}</div>
+                    </div>
+                    <div class="line">
+                        <div class="label">院校电话</div>
+                        <div class="value">{{ schoolInfo.schoolTel }}</div>
+                    </div>
+                    <div class="line">
+                        <div class="label">院校详情图</div>
+                        <div class="value">
+                            <el-image
+                                :src="setImgUrl(schoolInfo.schoolDetailPic)"
+                                :fit="'contain'"
+                            ></el-image>
+                        </div>
+                    </div>
                 </template>
             </base-info>
             <base-info :text="'专业信息'">
