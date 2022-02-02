@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router"
 import { adaptRouter, adaptSidebar } from '@/utils/adaptRouter'
 
 const routes = [
@@ -140,7 +140,7 @@ const routes = [
                 component: () => import (/* webpackChunkName: "user" */ '../views/user/User.vue')
             }
         ]
-    }, 
+    },
     {
         path: "/login",
         name: "Login",
@@ -150,13 +150,21 @@ const routes = [
         component: () => import ( /* webpackChunkName: "login" */ "../views/Login.vue")
     },
     {
+        path: "/test",
+        name: "Test",
+        meta: {
+            title: 'test'
+        },
+        component: () => import ( /* webpackChunkName: "test" */ "../views/test.vue")
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: '404',
         meta: {
             title: '找不到页面'
         },
         component: () => import (/* webpackChunkName: "404" */ '../views/404.vue')
-    }
+    },
 ];
 
 
@@ -167,7 +175,7 @@ let slideBar = adaptSidebar(routes)
 const router = createRouter({
     history: createWebHashHistory(),
     routes: vueRouter
-});
+})
 
 router.beforeEach((to, from, next) => {
     document.title = `${to.meta.title} | vue-manage-system`;
@@ -185,4 +193,7 @@ router.beforeEach((to, from, next) => {
 });
 
 
-export { router, slideBar };
+export { 
+    router, 
+    slideBar
+}

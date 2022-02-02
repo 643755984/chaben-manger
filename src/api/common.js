@@ -6,5 +6,15 @@ export const uploadFile = formData => {
         method: 'post',
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
-    });
-};
+    })
+}
+
+
+export const uploadImgInBase64 = formData => {
+    return request({
+        url: '/common/upload/base64',
+        method: 'post',
+        data: formData,
+        // headers: { "Content-Type": "multipart/form-data" },
+    })
+}

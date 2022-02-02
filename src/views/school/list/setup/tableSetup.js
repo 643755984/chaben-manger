@@ -4,7 +4,7 @@ import { deleteSchool, getSchoolList  } from '@/api/school'
 import { ElMessage } from "element-plus"
 
 export default function useNav() {
-    const router = useRouter();
+    const router = useRouter()
     const page = reactive({
         schoolName: "",
         pageNum: 1,

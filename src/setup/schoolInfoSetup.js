@@ -1,7 +1,8 @@
 export default function schoolInfoSetup() {
     const schoolType = [
         { value: 0, label: '民办院校' },
-        { value: 1, label: '公办院校' }
+        { value: 1, label: '公办院校' },
+        { value: 1, label: '职业本科' }
     ]
 
     const schoolLevel = [
