@@ -8,3 +8,10 @@ export const updatePassword = data => {
         data
     })
 }
+
+export const getUserInfo = () => {
+    return request({
+        url: '/user/info',
+        method: 'get'
+    })
+}

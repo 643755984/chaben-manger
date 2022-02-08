@@ -175,7 +175,7 @@ const updateSchoolFn = () => {
             store.commit("closeCurrentTag", {
                 $router: router,
                 $route: route
-            });
+            })
         }
     })
 }
@@ -187,7 +187,7 @@ const addSchoolFn = () => {
             store.commit("closeCurrentTag", {
                 $router: router,
                 $route: route
-            });
+            })
         }
     })
 }

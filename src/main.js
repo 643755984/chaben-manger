@@ -6,7 +6,7 @@ import installElementPlus from './plugins/element'
 
 const app = createApp(App)
 installElementPlus(app)
-app.use(store).use(router).mount('#app')
+app.use(router).use(store).mount('#app')
 
-const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-if(userInfo) store.commit("setUserInfo", userInfo)
+// const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+// if(userInfo) store.commit("setUserInfo", userInfo)

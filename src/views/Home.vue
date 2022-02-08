@@ -18,11 +18,12 @@
     </div>
 </template>
 <script>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import vHeader from "../components/Header.vue";
 import vSidebar from "../components/Sidebar.vue";
 import vTags from "../components/Tags.vue";
+import { getUserInfo } from "@/api/user"
 export default {
     components: {
         vHeader,
@@ -34,7 +35,16 @@ export default {
         const tagsList = computed(() =>
             store.state.tagsList.map((item) => item.name)
         );
-        const collapse = computed(() => store.state.collapse);
+        const collapse = computed(() => store.state.collapse)
+
+        onMounted(() => {
+            getUserInfo().then(res => {
+                if(res.code === 200) {
+                    store.commit("setUserInfo", res.data)
+                }
+            })
+        })
+
         return {
             tagsList,
             collapse,

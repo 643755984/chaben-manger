@@ -6,9 +6,12 @@ const service = axios.create({
     timeout: 5000
 });
 
-
 service.interceptors.request.use(
     config => {
+        let token = JSON.parse(localStorage.getItem('token'))
+        if(token !== null) {
+            config.headers['authorization'] = `${token}`
+        }
         return config;
     },
     error => {
@@ -26,8 +29,6 @@ service.interceptors.response.use(
         Promise.reject()
     },
     error => {
-        // console.log(error);
-        // return Promise.reject();
         const { response } = error
         if(response) {
             // 请求以发出，但不在2xx以内
@@ -38,6 +39,10 @@ service.interceptors.response.use(
 
 const errorHandle = (status, other) => {
     switch (status) {
+        case 401:
+            ElMessage.error('请重新登录')   
+            router.push({name: 'Login'})
+            break
         case 404:
             ElMessage.error('请求资源不存在')
             break

@@ -4,7 +4,9 @@ export default createStore({
     state: {
         tagsList: [],
         collapse: false,
-        userInfo: null
+        userInfo: {
+            nickname: ''
+        }
     },
     mutations: {
         delTagsItem(state, data) {

@@ -69,8 +69,7 @@ export default {
             userLogin(param).then(res => {
                 if(res.code === 200) {
                     ElMessage.success("登录成功");
-                    localStorage.setItem("userInfo", JSON.stringify(res.data));
-                    store.commit("setUserInfo", res.data)
+                    localStorage.setItem("token", JSON.stringify(res.token))
                     router.push("/");
                 } else {
                     ElMessage.error("登录失败");
